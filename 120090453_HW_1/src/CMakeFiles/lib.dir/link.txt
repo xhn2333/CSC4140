@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblib.a  CMakeFiles/lib.dir/q2-1.cpp.o CMakeFiles/lib.dir/q2-2.cpp.o CMakeFiles/lib.dir/q2-3.cpp.o CMakeFiles/lib.dir/q2-4.cpp.o
+/usr/bin/ranlib liblib.a
