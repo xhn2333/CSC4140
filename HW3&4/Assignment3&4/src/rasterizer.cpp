@@ -63,7 +63,7 @@ namespace CGL
         int steep = abs(m) > 1;
         if (steep)
         {
-            dpt[0] = x1 == x0 ? 0 : 1 / abs(m);
+            dpt[0] = x1 == x0 ? 0 : 1.0 / abs(m);
             dpt[1] = x1 == x0 ? (y1 - y0) / abs(y1 - y0) : m / abs(m);
         }
 
@@ -97,8 +97,8 @@ namespace CGL
     // ==0  on the edge
     // <0   outside the edge
     float RasterizerImp::locationEdge(float x0, float y0,
-                                    float x1, float y1,
-                                    RasterizerPoint p)
+                                      float x1, float y1,
+                                      RasterizerPoint p)
     {
         float dx = x1 - x0;
         float dy = y1 - y0;
@@ -112,38 +112,46 @@ namespace CGL
                                            Color color)
     {
         // TODO: Task 1: Implement basic triangle rasterization here, no supersampling
-        RasterizerPoint bottom;
-        bottom.x = x0, bottom.y = y0;
+
+        RasterizerPoint midPoint;
+        midPoint.x = int((x0 + x1 + x2) / 3) + 0.5, midPoint.y = int((y0 + y1 + y2) / 3) + 0.5;
         queue<RasterizerPoint> q;
-        q.push(bottom);
-        float m1 = (y1 - y0) / (x1 - x0), m2 = (y2 - y0) / (x2 - x0);
-        float dpt1[] = {1, m1};
-        float dpt2[] = {1, m2};
-        int steep1 = abs(m1) > 1;
-        if (steep1)
+        // map<pair<int, int>, Color> hashMap;
+        bool hashMap[width][height]={0};
+        vector<vector<float>> dir = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+        q.push(midPoint);
+        for (int i = 0; i < 4; ++i)
         {
-            dpt1[0] = x1 == x0 ? 0 : 1 / abs(m1);
-            dpt1[1] = x1 == x0 ? (y1 - y0) / abs(y1 - y0) : m1 / abs(m1);
-        }
-        int steep2 = abs(m2) > 1;
-        if (steep2)
-        {
-            dpt2[0] = x2 == x0 ? 0 : 1 / abs(m2);
-            dpt2[1] = x2 == x0 ? (y2 - y0) / abs(y2 - y0) : m2 / abs(m2);
+            RasterizerPoint tail;
+            tail.x = midPoint.x + dir[i][0];
+            tail.y = midPoint.y + dir[i][1];
+            q.push(tail);
         }
         while (!q.empty())
         {
             RasterizerPoint head = q.front();
             q.pop();
-            if (point_in_triangle(x0, y0, x1, y1, x2, y2, head))
+            if (!hashMap[(int(head.x)%width+width)%width][(int(head.y)%height+height)%height])
             {
-                rasterize_point(head.x, head.y, color);
-
-                RasterizerPoint tail1, tail2;
-                tail1.x = head.x + dpt1[0], tail1.y = head.y + dpt1[1];
-                tail2.x = head.x + dpt2[0], tail2.y = head.y + dpt2[1];
-                q.push(tail1);
-                q.push(tail2);
+                if (point_in_triangle(x0, y0, x1, y1, x2, y2, head))
+                {
+                    rasterize_point(head.x - 0.5, head.y - 0.5, color);
+                    hashMap[(int(head.x)%width+width)%width][(int(head.y)%height+height)%height] = true;
+                    /*
+                    hashMap.insert(
+                        make_pair(
+                            make_pair(int(floor(head.x)), int(floor(head.y))),
+                            color));
+                    */
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        RasterizerPoint tail;
+                        tail.x = head.x + dir[i][0];
+                        tail.y = head.y + dir[i][1];
+                        q.push(tail);
+                    }
+                }
             }
         }
         // TODO: Task 2: Update to implement super-sampled rasterization
