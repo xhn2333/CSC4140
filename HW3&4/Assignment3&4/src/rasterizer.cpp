@@ -1,9 +1,11 @@
 #include "rasterizer.h"
 #include <queue>
+#include <set>
 using namespace std;
 
 namespace CGL
 {
+    int num = 0;
     RasterizerImp::RasterizerImp(PixelSampleMethod psm, LevelSampleMethod lsm,
                                  size_t width, size_t height,
                                  unsigned int sample_rate)
@@ -23,8 +25,10 @@ namespace CGL
         // TODO: Task 2: You might need to this function to fix points and lines (such as the black rectangle border in test4.svg)
         // NOTE: You are not required to implement proper supersampling for points and lines
         // It is sufficient to use the same color for all supersamples of a pixel for points and lines (not triangles)
-
-        sample_buffer[y * width + x] = c;
+        int sqrt_sample_rate = int(sqrt(sample_rate));
+        int sx = x * sqrt_sample_rate;
+        int sy = y * sqrt_sample_rate;
+        sample_buffer[(sy * width * sqrt_sample_rate + sx)] = c;
     }
 
     // Rasterize a point: simple example to help you start familiarizing
@@ -77,83 +81,104 @@ namespace CGL
 
     // Rasterize a triangle.
 
-    bool RasterizerImp::point_in_triangle(float x0, float y0,
-                                          float x1, float y1,
-                                          float x2, float y2,
-                                          RasterizerPoint p)
+    bool RasterizerImp::inside(float Ax, float Ay,
+                               float Bx, float By,
+                               float Cx, float Cy,
+                               float Px, float Py)
     {
-        if (locationEdge(x0, y0, x1, y1, p) >= 0 && locationEdge(x1, y1, x2, y2, p) >= 0 && locationEdge(x2, y2, x0, y0, p) >= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
-    // locationEdge
-    // >0   inside the edge
-    // ==0  on the edge
-    // <0   outside the edge
-    float RasterizerImp::locationEdge(float x0, float y0,
-                                      float x1, float y1,
-                                      RasterizerPoint p)
-    {
-        float dx = x1 - x0;
-        float dy = y1 - y0;
-        float l = -(p.x - x0) * dy + (p.y - y0) * dx;
-        return l;
-    }
+        float ax, ay, bx, by, cx, cy, apx, apy, bpx, bpy, cpx, cpy;
+        float cCROSSap, bCROSScp, aCROSSbp;
+
+        ax = Cx - Bx;
+        ay = Cy - By;
+        bx = Ax - Cx;
+        by = Ay - Cy;
+        cx = Bx - Ax;
+        cy = By - Ay;
+        apx = Px - Ax;
+        apy = Py - Ay;
+        bpx = Px - Bx;
+        bpy = Py - By;
+        cpx = Px - Cx;
+        cpy = Py - Cy;
+
+        aCROSSbp = ax * bpy - ay * bpx;
+        cCROSSap = cx * apy - cy * apx;
+        bCROSScp = bx * cpy - by * cpx;
+
+        return ((aCROSSbp >= 0.0f) && (bCROSScp >= 0.0f) && (cCROSSap >= 0.0f)) || ((aCROSSbp <= 0.0f) && (bCROSScp <= 0.0f) && (cCROSSap <= 0.0f));
+    };
 
     void RasterizerImp::rasterize_triangle(float x0, float y0,
                                            float x1, float y1,
                                            float x2, float y2,
                                            Color color)
     {
+        // num++;
         // TODO: Task 1: Implement basic triangle rasterization here, no supersampling
 
-        RasterizerPoint midPoint;
-        midPoint.x = int((x0 + x1 + x2) / 3) + 0.5, midPoint.y = int((y0 + y1 + y2) / 3) + 0.5;
-        queue<RasterizerPoint> q;
-        // map<pair<int, int>, Color> hashMap;
-        bool hashMap[width][height]={0};
-        vector<vector<float>> dir = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        int sqrt_sample_rate = int(sqrt(sample_rate));
+        float threshold_sample_rate = 1.0 / sqrt_sample_rate;
 
+        RasterizerPoint midPoint;
+        midPoint.x = int((x0 + x1 + x2) / 3) + 0.5 * threshold_sample_rate;
+        midPoint.y = int((y0 + y1 + y2) / 3) + 0.5 * threshold_sample_rate;
+
+        queue<RasterizerPoint> q;
+        set<pair<int, int> > hashMap;
+        float dir[4][2] = {{0.0f, 1.0}, {0.0f, -1.0}, {1.0, 0.0f}, {-1.0, 0.0f}};
+        
         q.push(midPoint);
-        for (int i = 0; i < 4; ++i)
-        {
-            RasterizerPoint tail;
-            tail.x = midPoint.x + dir[i][0];
-            tail.y = midPoint.y + dir[i][1];
-            q.push(tail);
-        }
         while (!q.empty())
         {
             RasterizerPoint head = q.front();
             q.pop();
-            if (!hashMap[(int(head.x)%width+width)%width][(int(head.y)%height+height)%height])
+            int sx = (int)floor(head.x * sqrt_sample_rate);
+            int sy = (int)floor(head.y * sqrt_sample_rate);
+            if (sx < 0 || sx >= width * sqrt_sample_rate)
+                continue;
+            if (sy < 0 || sy >= height * sqrt_sample_rate)
+                continue;
+            if (hashMap.find(make_pair(sx, sy)) == hashMap.end())
             {
-                if (point_in_triangle(x0, y0, x1, y1, x2, y2, head))
+
+                if (inside(x0, y0, x1, y1, x2, y2, head.x, head.y))
                 {
-                    rasterize_point(head.x - 0.5, head.y - 0.5, color);
-                    hashMap[(int(head.x)%width+width)%width][(int(head.y)%height+height)%height] = true;
-                    /*
-                    hashMap.insert(
-                        make_pair(
-                            make_pair(int(floor(head.x)), int(floor(head.y))),
-                            color));
-                    */
+                    sample_buffer[sy * width * sqrt_sample_rate + sx] = color;
+
+                    hashMap.insert(make_pair(sx, sy));
                     for (int i = 0; i < 4; ++i)
                     {
                         RasterizerPoint tail;
-                        tail.x = head.x + dir[i][0];
-                        tail.y = head.y + dir[i][1];
+                        tail.x = head.x + dir[i][0] * threshold_sample_rate;
+                        tail.y = head.y + dir[i][1] * threshold_sample_rate;
                         q.push(tail);
                     }
                 }
             }
         }
+        /*
+        if (!hashMap.size())
+        {
+            cout << "--------------------" << num << endl;
+            cout << "A: " << x0 << " " << y0 << endl;
+            cout << "B: " << x1 << " " << y1 << endl;
+            cout << "C: " << x2 << " " << y2 << endl;
+            cout << "MidPoint: " << midPoint.x << " " << midPoint.y << endl;
+            for (int i = 0; i < 4; ++i)
+            {
+                RasterizerPoint tail;
+                tail.x = midPoint.x + dir[i][0];
+                tail.y = midPoint.y + dir[i][1];
+                cout << "tail:" << tail.x << " " << tail.y << " "
+                     << (hashMap.find(make_pair(int(tail.x), int(tail.y))) == hashMap.end()) << " "
+                     << inside(x0, y0, x1, y1, x2, y2, tail.x, tail.y)
+                     << endl;
+            }
+        }
+        */
+
         // TODO: Task 2: Update to implement super-sampled rasterization
     }
 
@@ -181,7 +206,8 @@ namespace CGL
 
         this->sample_rate = rate;
 
-        this->sample_buffer.resize(width * height, Color::White);
+        this->sample_buffer.resize(width * height * sample_rate, Color::White);
+
     }
 
     void RasterizerImp::set_framebuffer_target(unsigned char *rgb_framebuffer,
@@ -216,8 +242,12 @@ namespace CGL
         {
             for (int y = 0; y < height; ++y)
             {
-                Color col = sample_buffer[y * width + x];
-
+                Color col;
+                int sqrt_sample_rate = int(sqrt(sample_rate));
+                for (int sx = x*sqrt_sample_rate; sx < (x+1)*sqrt_sample_rate; sx++)
+                    for (int sy = y*sqrt_sample_rate; sy < (y+1)*sqrt_sample_rate; sy++)
+                        col += sample_buffer[sy * width * sqrt_sample_rate + sx];
+                col *= 1.0 / sample_rate;
                 for (int k = 0; k < 3; ++k)
                 {
                     this->rgb_framebuffer_target[3 * (y * width + x) + k] = (&col.r)[k] * 255;

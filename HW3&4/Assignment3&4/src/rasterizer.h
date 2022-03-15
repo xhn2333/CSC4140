@@ -9,7 +9,8 @@
 namespace CGL
 {
 
-    struct RasterizerPoint{
+    struct RasterizerPoint
+    {
         float x, y;
     };
 
@@ -31,14 +32,10 @@ namespace CGL
                                     float x1, float y1,
                                     Color color) = 0;
 
-        virtual bool point_in_triangle(float x0, float y0,
-                                       float x1, float y1,
-                                       float x2, float y2,
-                                       RasterizerPoint p) = 0;
-
-        virtual float locationEdge(float x0, float y0,
-                                 float x1, float y1,
-                                 RasterizerPoint p) = 0;
+        virtual bool inside(float Ax, float Ay,
+                            float Bx, float By,
+                            float Cx, float Cy,
+                            float Px, float Py) = 0;
 
         // Rasterize a triangle
         // P0 = (x0, y0)
@@ -110,6 +107,11 @@ namespace CGL
                             float x1, float y1,
                             Color color);
 
+        bool inside(float Ax, float Ay,
+                    float Bx, float By,
+                    float Cx, float Cy,
+                    float Px, float Py);
+
         // Rasterize a triangle
         // P0 = (x0, y0)
         // P1 = (x1, y1)
@@ -119,14 +121,6 @@ namespace CGL
                                 float x2, float y2,
                                 Color color);
 
-        bool point_in_triangle(float x0, float y0,
-                               float x1, float y1,
-                               float x2, float y2,
-                               RasterizerPoint p);
-
-        float locationEdge(float x0, float y0,
-                         float x1, float y1,
-                         RasterizerPoint p);
 
         void rasterize_interpolated_color_triangle(float x0, float y0, Color c0,
                                                    float x1, float y1, Color c1,

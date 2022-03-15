@@ -151,8 +151,8 @@ CGL/deps/glfw/src/clean: CGL/deps/glfw/src/CMakeFiles/glfw.dir/clean
 # Target rules for target CMakeFiles/draw.dir
 
 # All Build rule for target.
-CMakeFiles/draw.dir/all: CGL/deps/glew/CMakeFiles/glew.dir/all
 CMakeFiles/draw.dir/all: CGL/CMakeFiles/CGL.dir/all
+CMakeFiles/draw.dir/all: CGL/deps/glew/CMakeFiles/glew.dir/all
 CMakeFiles/draw.dir/all: CGL/deps/glfw/src/CMakeFiles/glfw.dir/all
 	$(MAKE) -f CMakeFiles/draw.dir/build.make CMakeFiles/draw.dir/depend
 	$(MAKE) -f CMakeFiles/draw.dir/build.make CMakeFiles/draw.dir/build
