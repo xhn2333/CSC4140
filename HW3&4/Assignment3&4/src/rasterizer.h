@@ -9,6 +9,10 @@
 namespace CGL
 {
 
+    struct RasterizerPoint{
+        float x, y;
+    };
+
     class Rasterizer
     {
     public:
@@ -26,6 +30,15 @@ namespace CGL
         virtual void rasterize_line(float x0, float y0,
                                     float x1, float y1,
                                     Color color) = 0;
+
+        virtual bool point_in_triangle(float x0, float y0,
+                                       float x1, float y1,
+                                       float x2, float y2,
+                                       RasterizerPoint p) = 0;
+
+        virtual float locationEdge(float x0, float y0,
+                                 float x1, float y1,
+                                 RasterizerPoint p) = 0;
 
         // Rasterize a triangle
         // P0 = (x0, y0)
@@ -83,12 +96,6 @@ namespace CGL
         std::vector<Color> sample_buffer;
 
     public:
-        struct point
-        {
-            float x, y;
-            /* data */
-        };
-        
         RasterizerImp(PixelSampleMethod psm, LevelSampleMethod lsm,
                       size_t width, size_t height, unsigned int sample_rate);
 
@@ -112,15 +119,14 @@ namespace CGL
                                 float x2, float y2,
                                 Color color);
 
-        int point_in_triangle(float x0, float y0,
-                              float x1, float y1,
-                              float x2, float y2,
-                              point p
-                              );
-        
-        int locationEdge(float x0, float y0,
-                     float x1, float y1,
-                     point p);
+        bool point_in_triangle(float x0, float y0,
+                               float x1, float y1,
+                               float x2, float y2,
+                               RasterizerPoint p);
+
+        float locationEdge(float x0, float y0,
+                         float x1, float y1,
+                         RasterizerPoint p);
 
         void rasterize_interpolated_color_triangle(float x0, float y0, Color c0,
                                                    float x1, float y1, Color c1,
