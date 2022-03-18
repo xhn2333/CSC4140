@@ -70,10 +70,6 @@ GL/glext.h
 misc.h
 ../CGL/include/CGL/misc.h
 
-../CGL/include/CGL/base64.h
-string
--
-
 ../CGL/include/CGL/color.h
 CGL.h
 ../CGL/include/CGL/CGL.h
@@ -364,39 +360,9 @@ transforms.h
 texture.h
 /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/texture.h
 
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svgparser.cpp
-svgparser.h
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svgparser.h
-CGL/base64.h
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/CGL/base64.h
-CGL/lodepng.h
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/CGL/lodepng.h
-texture.h
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/texture.h
-string
--
-fstream
--
-sstream
--
-iostream
--
-algorithm
--
-
 /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svgparser.h
 svg.h
 /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svg.h
-
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/texture.cpp
-texture.h
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/texture.h
-CGL/color.h
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/CGL/color.h
-cmath
--
-algorithm
--
 
 /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/texture.h
 vector
@@ -413,12 +379,6 @@ iostream
 /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/transforms.h
 CGL/CGL.h
 /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/CGL/CGL.h
-
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/triangulation.cpp
-triangulation.h
-/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/triangulation.h
-vector
--
 
 /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/triangulation.h
 svg.h

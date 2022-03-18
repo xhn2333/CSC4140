@@ -236,8 +236,8 @@ namespace CGL
         float threshold_sample_rate = 1.0 / sqrt_sample_rate;
 
         RasterizerPoint midPoint;
-        midPoint.x = float(int((x0 + x1 + x2) / 3)) + 0.5 * threshold_sample_rate;
-        midPoint.y = float(int((y0 + y1 + y2) / 3)) + 0.5 * threshold_sample_rate;
+        midPoint.x = float(floor((x0 + x1 + x2) / 3)) + 0.5 * threshold_sample_rate;
+        midPoint.y = float(floor((y0 + y1 + y2) / 3)) + 0.5 * threshold_sample_rate;
 
         queue<RasterizerPoint> q;
         set<pair<int, int>> hashMap;
@@ -248,8 +248,8 @@ namespace CGL
         {
             RasterizerPoint head = q.front();
             q.pop();
-            int sx = (int)floor(float(head.x * sqrt_sample_rate));
-            int sy = (int)floor(float(head.y * sqrt_sample_rate));
+            int sx = int(float(head.x * sqrt_sample_rate));
+            int sy = int(float(head.y * sqrt_sample_rate));
             if (sx < 0 || sx >= width * sqrt_sample_rate)
                 continue;
             if (sy < 0 || sy >= height * sqrt_sample_rate)
@@ -296,17 +296,13 @@ namespace CGL
         SampleParams params;
         Vector2D U1(x1 - x0, y1 - y0), U2(x2 - x0, y2 - y0);
         Vector2D V1(u1 - u0, v1 - v0), V2(u2 - u0, v2 - v0);
-        params.p_dx_uv = Vector2D((U1.y * (-V2.x) - U2.y * (-V1.x)) / (U1.x * U2.y - U1.y * U2.x),
-                                  (U1.y * (-V2.y) - U2.y * (-V1.y)) / (U1.x * U2.y - U1.y * U2.x));
-        params.p_dy_uv = Vector2D((U1.x * (-V2.x) - U2.x * (-V1.x)) / (U1.y * U2.x - U1.x * U2.y),
-                                  (U1.y * (-V2.y) - U2.y * (-V1.y)) / (U1.x * U2.y - U1.y * U2.x));
 
         int sqrt_sample_rate = int(sqrt(sample_rate));
         float threshold_sample_rate = 1.0 / sqrt_sample_rate;
 
         RasterizerPoint midPoint;
-        midPoint.x = float(int((x0 + x1 + x2) / 3)) + 0.5 * threshold_sample_rate;
-        midPoint.y = float(int((y0 + y1 + y2) / 3)) + 0.5 * threshold_sample_rate;
+        midPoint.x = float(floor((x0 + x1 + x2) / 3)) + 0.5 * threshold_sample_rate;
+        midPoint.y = float(floor((y0 + y1 + y2) / 3)) + 0.5 * threshold_sample_rate;
 
         queue<RasterizerPoint> q;
         set<pair<int, int>> hashMap;
@@ -317,8 +313,8 @@ namespace CGL
         {
             RasterizerPoint head = q.front();
             q.pop();
-            int sx = (int)floor(float(head.x * sqrt_sample_rate));
-            int sy = (int)floor(float(head.y * sqrt_sample_rate));
+            int sx = int(float(head.x * sqrt_sample_rate));
+            int sy = int(float(head.y * sqrt_sample_rate));
             if (sx < 0 || sx >= width * sqrt_sample_rate)
                 continue;
             if (sy < 0 || sy >= height * sqrt_sample_rate)
@@ -357,8 +353,47 @@ namespace CGL
                 }
             }
         }
+        rasterize_interpolated_texture_line(x0, y0, u0, v0, x1, y1, u1, v1, tex, params);
+        rasterize_interpolated_texture_line(x1, y1, u1, v1, x2, y2, u2, v2, tex, params);
+        rasterize_interpolated_texture_line(x2, y2, u2, v2, x0, y0, u0, v0, tex, params);
         // TODO: Task 6: Set the correct barycentric differentials in the SampleParams struct.
         // Hint: You can reuse code from rasterize_triangle/rasterize_interpolated_color_triangle
+    }
+
+    void RasterizerImp::rasterize_interpolated_texture_line(float x0, float y0, float u0, float v0,
+                                                          float x1, float y1, float u1, float v1,
+                                                          Texture &tex, SampleParams &sp)
+    {
+        if (x0 > x1)
+        {
+            swap(x0, x1);
+            swap(y0, y1);
+            swap(u0, u1);
+            swap(v0, v1);
+        }
+        float threshold_sample_rate = 1.0 / int(sqrt(sample_rate));
+        float pt[] = {x0, y0};
+        float m = (y1 - y0) / (x1 - x0);
+        float dpt[] = {1, m};
+        int steep = abs(m) > 1;
+        if (steep)
+        {
+            dpt[0] = x1 == x0 ? 0 : 1.0 / abs(m);
+            dpt[1] = x1 == x0 ? (y1 - y0) / abs(y1 - y0) : m / abs(m);
+        }
+
+        while (floor(pt[0]) <= floor(x1) && abs(pt[1] - y0) <= abs(y1 - y0))
+        {
+            float Alpha = ((x0 != x1) ? (x1 - pt[0]) / (x1 - x0) : (y1 - pt[1]) / (y1 - y0));
+            sp.p_uv = Vector2D(Alpha * u0 + (1 - Alpha) * u1, Alpha * v0 + (1 - Alpha) * v1);
+            Color color = tex.sample(sp);
+            rasterize_point(pt[0], pt[1], color);
+            pt[0] += dpt[0] * threshold_sample_rate;
+            pt[1] += dpt[1] * threshold_sample_rate;
+        }
+
+        // numLine ++;
+        // cout << "-------------line" << numLine << endl;
     }
 
     void RasterizerImp::set_sample_rate(unsigned int rate)

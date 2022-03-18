@@ -58,6 +58,10 @@ namespace CGL
                                                  float x2, float y2, float u2, float v2,
                                                  Texture &tex) = 0;
 
+        virtual void rasterize_interpolated_texture_line(float x0, float y0, float u0, float v0,
+                                                         float x1, float y1, float u1, float v1,
+                                                         Texture &tex, SampleParams &sp) = 0;
+
         // This function sets the framebuffer target.  The block of memory
         // for the framebuffer contains 3 * width * height values for an RGB
         // pixel framebuffer with 8-bits per color channel.
@@ -136,6 +140,9 @@ namespace CGL
                                          float x2, float y2, float u2, float v2,
                                          Texture &tex);
 
+        void rasterize_interpolated_texture_line(float x0, float y0, float u0, float v0,
+                                                 float x1, float y1, float u1, float v1,
+                                                 Texture &tex, SampleParams &sp);
         unsigned int get_sample_rate() { return sample_rate; }
 
         void set_sample_rate(unsigned int rate);
