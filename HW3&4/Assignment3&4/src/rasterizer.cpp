@@ -290,7 +290,9 @@ namespace CGL
     {
         // TODO: Task 5: Fill in the SampleParams struct and pass it to the tex.sample function.
         float Alpha, Beta, Gamma;
-        
+        float Alpha1, Beta1, Gamma1;
+        float Alpha2, Beta2, Gamma2;
+
         SampleParams params;
         Vector2D U1(x1 - x0, y1 - y0), U2(x2 - x0, y2 - y0);
         Vector2D V1(u1 - u0, v1 - v0), V2(u2 - u0, v2 - v0);
@@ -329,8 +331,18 @@ namespace CGL
                     Alpha = (-(head.x - x1) * (y2 - y1) + (head.y - y1) * (x2 - x1)) / (-(x0 - x1) * (y2 - y1) + (y0 - y1) * (x2 - x1));
                     Beta = (-(head.x - x2) * (y0 - y2) + (head.y - y2) * (x0 - x2)) / (-(x1 - x2) * (y0 - y2) + (y1 - y2) * (x0 - x2));
                     Gamma = 1 - Alpha - Beta;
+
+                    Alpha1 = (-(head.x + threshold_sample_rate - x1) * (y2 - y1) + (head.y - y1) * (x2 - x1)) / (-(x0 - x1) * (y2 - y1) + (y0 - y1) * (x2 - x1));
+                    Beta1 = (-(head.x + threshold_sample_rate - x2) * (y0 - y2) + (head.y - y2) * (x0 - x2)) / (-(x1 - x2) * (y0 - y2) + (y1 - y2) * (x0 - x2));
+                    Gamma1 = 1 - Alpha - Beta;
+
+                    Alpha2 = (-(head.x - x1) * (y2 - y1) + (head.y + threshold_sample_rate - y1) * (x2 - x1)) / (-(x0 - x1) * (y2 - y1) + (y0 - y1) * (x2 - x1));
+                    Beta2 = (-(head.x - x2) * (y0 - y2) + (head.y + threshold_sample_rate - y2) * (x0 - x2)) / (-(x1 - x2) * (y0 - y2) + (y1 - y2) * (x0 - x2));
+                    Gamma2 = 1 - Alpha - Beta;
                     
                     params.p_uv = Alpha * Vector2D(u0, v0) + Beta * Vector2D(u1, v1) + Gamma * Vector2D(u2, v2);
+                    params.p_dx_uv = (Alpha1 * Vector2D(u0, v0) + Beta1 * Vector2D(u1, v1) + Gamma1 * Vector2D(u2, v2) - params.p_uv) / threshold_sample_rate;
+                    params.p_dy_uv = (Alpha2 * Vector2D(u0, v0) + Beta2 * Vector2D(u1, v1) + Gamma2 * Vector2D(u2, v2) - params.p_uv) / threshold_sample_rate;
                     // std::cout << params.p_uv.x << " " << params.p_uv.y << endl;
 
                     fill_pixel(head.x, head.y, tex.sample(params));

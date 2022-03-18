@@ -22,8 +22,9 @@ namespace CGL
     float Texture::get_level(const SampleParams &sp)
     {
         // TODO: Task 6: Fill this in.
-        
-        return 0;
+        float level = 0;
+        level = max(sqrt(pow(sp.p_dx_uv[0], 2) + pow(sp.p_dx_uv[1], 2)), sqrt(pow(sp.p_dy_uv[0], 2) + pow(sp.p_dy_uv[1], 2)));
+        return log2(level);
     }
 
     Color MipLevel::get_texel(int tx, int ty)
