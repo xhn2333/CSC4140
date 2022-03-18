@@ -10,9 +10,13 @@ namespace CGL
     Color Texture::sample(const SampleParams &sp)
     {
         // TODO: Task 6: Fill this in.
-
+        if (sp.psm == P_LINEAR)
+            return sample_bilinear(sp.p_uv, sp.lsm);
+        else if (sp.psm == P_NEAREST)
+            return sample_nearest(sp.p_uv, sp.lsm);
         // return magenta for invalid level
-        return Color(1, 0, 1);
+        else
+            return Color(1, 0, 1);
     }
 
     float Texture::get_level(const SampleParams &sp)
@@ -31,9 +35,11 @@ namespace CGL
     {
         // TODO: Task 5: Fill this in.
         auto &mip = mipmap[level];
-        if (mip.width > 0 && mip.height > 0 && uv.x >= 0 && uv.y >= 0)
+        int sample_x = int(uv.x * mip.width + 0.5);
+        int sample_y = int(uv.y * mip.height + 0.5);
+        if (sample_x <=mip.width && sample_y <= mip.height)
         {
-            return mip.get_texel(int(uv.x + 0.5), int(uv.y + 0.5));
+            return mip.get_texel(sample_x, sample_y);
         }
         // return magenta for invalid level
         return Color(1, 0, 1);
@@ -45,13 +51,13 @@ namespace CGL
         auto &mip = mipmap[level];
         if (mip.width > 0 && mip.height > 0 && uv.x >= 0 && uv.y >= 0)
         {
-            int tx00 = (int)floor(uv.x), ty00 = (int)floor(uv.y);
-            int tx01 = (int)floor(uv.x), ty01 = (int)floor(uv.y) + 1;
-            int tx10 = (int)floor(uv.x) + 1, ty10 = (int)floor(uv.y);
-            int tx11 = (int)floor(uv.x) + 1, ty11 = (int)floor(uv.y) + 1;
-            Color color0 = (tx10 - uv.x ) * mip.get_texel(tx00, ty00) + (uv.x - tx00) * mip.get_texel(tx10, ty10);
-            Color color1 = (tx11 - uv.x ) * mip.get_texel(tx01, ty01) + (uv.x - tx01) * mip.get_texel(tx11, ty11);
-            return (ty01 - uv.y) * color0 + (uv.y - ty00) * color1;
+            int tx00 = (int)floor(uv.x * mip.width), ty00 = (int)floor(uv.y * mip.height);
+            int tx01 = (int)floor(uv.x * mip.width), ty01 = (int)floor(uv.y * mip.height) + 1;
+            int tx10 = (int)floor(uv.x * mip.width) + 1, ty10 = (int)floor(uv.y * mip.height);
+            int tx11 = (int)floor(uv.x * mip.width) + 1, ty11 = (int)floor(uv.y * mip.height) + 1;
+            Color color0 = (tx10 - uv.x * mip.width ) * mip.get_texel(tx00, ty00) + (uv.x * mip.width - tx00) * mip.get_texel(tx10, ty10);
+            Color color1 = (tx11 - uv.x * mip.width ) * mip.get_texel(tx01, ty01) + (uv.x * mip.width - tx01) * mip.get_texel(tx11, ty11);
+            return (ty01 - uv.y * mip.height) * color0 + (uv.y * mip.height - ty00) * color1;
         }
 
         // return magenta for invalid level

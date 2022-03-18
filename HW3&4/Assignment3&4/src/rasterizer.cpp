@@ -289,13 +289,62 @@ namespace CGL
                                                     Texture &tex)
     {
         // TODO: Task 5: Fill in the SampleParams struct and pass it to the tex.sample function.
+        float Alpha, Beta, Gamma;
+        
         SampleParams params;
-        Vector2D U1(x1-x0, y1-y0), U2(x2-x0, y2-y0);
-        Vector2D V1(u1-u0, v1-v0), V2(u2-u0, v2-v0);
-        params.p_dx_uv = Vector2D(  (U1.y*(-V2.y) - U2.y * (-V1.y)) / (U1.x * U2.x - U),
-                                    (U1.x*(-V2.x) - U2.x * (-V1.x)));
-        params.p_dy_uv;
-        params.p_uv;
+        Vector2D U1(x1 - x0, y1 - y0), U2(x2 - x0, y2 - y0);
+        Vector2D V1(u1 - u0, v1 - v0), V2(u2 - u0, v2 - v0);
+        params.p_dx_uv = Vector2D((U1.y * (-V2.x) - U2.y * (-V1.x)) / (U1.x * U2.y - U1.y * U2.x),
+                                  (U1.y * (-V2.y) - U2.y * (-V1.y)) / (U1.x * U2.y - U1.y * U2.x));
+        params.p_dy_uv = Vector2D((U1.x * (-V2.x) - U2.x * (-V1.x)) / (U1.y * U2.x - U1.x * U2.y),
+                                  (U1.y * (-V2.y) - U2.y * (-V1.y)) / (U1.x * U2.y - U1.y * U2.x));
+
+        int sqrt_sample_rate = int(sqrt(sample_rate));
+        float threshold_sample_rate = 1.0 / sqrt_sample_rate;
+
+        RasterizerPoint midPoint;
+        midPoint.x = float(int((x0 + x1 + x2) / 3)) + 0.5 * threshold_sample_rate;
+        midPoint.y = float(int((y0 + y1 + y2) / 3)) + 0.5 * threshold_sample_rate;
+
+        queue<RasterizerPoint> q;
+        set<pair<int, int>> hashMap;
+        float dir[8][2] = {{0.0f, 1.0}, {0.0f, -1.0}, {1.0, 0.0f}, {-1.0, 0.0f}, {1.0, 1.0}, {1.0, -1.0}, {-1.0, 1.0}, {-1.0, -1.0}};
+
+        q.push(midPoint);
+        while (!q.empty())
+        {
+            RasterizerPoint head = q.front();
+            q.pop();
+            int sx = (int)floor(float(head.x * sqrt_sample_rate));
+            int sy = (int)floor(float(head.y * sqrt_sample_rate));
+            if (sx < 0 || sx >= width * sqrt_sample_rate)
+                continue;
+            if (sy < 0 || sy >= height * sqrt_sample_rate)
+                continue;
+            if (hashMap.find(make_pair(sx, sy)) == hashMap.end())
+            {
+
+                if (inside(x0, y0, x1, y1, x2, y2, head.x, head.y))
+                {
+                    Alpha = (-(head.x - x1) * (y2 - y1) + (head.y - y1) * (x2 - x1)) / (-(x0 - x1) * (y2 - y1) + (y0 - y1) * (x2 - x1));
+                    Beta = (-(head.x - x2) * (y0 - y2) + (head.y - y2) * (x0 - x2)) / (-(x1 - x2) * (y0 - y2) + (y1 - y2) * (x0 - x2));
+                    Gamma = 1 - Alpha - Beta;
+                    
+                    params.p_uv = Alpha * Vector2D(u0, v0) + Beta * Vector2D(u1, v1) + Gamma * Vector2D(u2, v2);
+                    // std::cout << params.p_uv.x << " " << params.p_uv.y << endl;
+
+                    fill_pixel(head.x, head.y, tex.sample(params));
+                    hashMap.insert(make_pair(sx, sy));
+                    for (int i = 0; i < 8; ++i)
+                    {
+                        RasterizerPoint tail;
+                        tail.x = head.x + dir[i][0] * threshold_sample_rate;
+                        tail.y = head.y + dir[i][1] * threshold_sample_rate;
+                        q.push(tail);
+                    }
+                }
+            }
+        }
         // TODO: Task 6: Set the correct barycentric differentials in the SampleParams struct.
         // Hint: You can reuse code from rasterize_triangle/rasterize_interpolated_color_triangle
     }
