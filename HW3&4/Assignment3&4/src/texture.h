@@ -28,8 +28,8 @@ namespace CGL
     {
         Vector2D p_uv;
         Vector2D p_dx_uv, p_dy_uv;
-        PixelSampleMethod psm;
-        LevelSampleMethod lsm;
+        PixelSampleMethod psm=P_NEAREST;
+        LevelSampleMethod lsm=L_ZERO;
     };
 
     static const int kMaxMipLevels = 14;

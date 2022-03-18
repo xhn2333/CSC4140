@@ -10,13 +10,59 @@ namespace CGL
     Color Texture::sample(const SampleParams &sp)
     {
         // TODO: Task 6: Fill this in.
-        if (sp.psm == P_LINEAR)
-            return sample_bilinear(sp.p_uv, sp.lsm);
-        else if (sp.psm == P_NEAREST)
-            return sample_nearest(sp.p_uv, sp.lsm);
-        // return magenta for invalid level
+        float level = get_level(sp);
+        if (sp.lsm == L_ZERO)
+        {
+            level = 0;
+            if (sp.psm == P_LINEAR)
+                return sample_bilinear(sp.p_uv, level);
+            else if (sp.psm == P_NEAREST)
+                return sample_nearest(sp.p_uv, level);
+
+            else{
+                // std::cout << "LSM==" << sp.lsm << std::endl;
+                return Color(1, 0, 1);
+            }
+                
+        }
+        else if (sp.lsm == L_NEAREST)
+        {
+            level = (int)floor(level);
+            if (sp.psm == P_LINEAR)
+                return sample_bilinear(sp.p_uv, int(level + 0.5));
+            else if (sp.psm == P_NEAREST)
+                return sample_nearest(sp.p_uv, int(level + 0.5));
+            else
+            {
+                // std::cout << "LSM==" << level << std::endl;
+                return Color(1, 0, 1); 
+            }
+        }
+        else if (sp.lsm == L_LINEAR)
+        {
+            if (sp.psm == P_LINEAR)
+            {
+                Color color1 = sample_bilinear(sp.p_uv, int(level));
+                Color color2 = sample_bilinear(sp.p_uv, int(level) + 1);
+                return 1.0 * (int(level) + 1 - level) * color1 + 1.0 * (level - int(level)) * color2;
+            }
+            else if (sp.psm == P_NEAREST)
+            {
+                Color color1 = sample_nearest(sp.p_uv, int(level));
+                Color color2 = sample_nearest(sp.p_uv, int(level) + 1);
+                return 1.0 * (int(level) + 1 - level) * color1 + 1.0 * (level - int(level)) * color2;
+            }
+            else
+            {
+                // std::cout << "LSM==" << level << std::endl;
+                return Color(1, 0, 1);
+            }
+        }
         else
+        {   
+            //-----------------std::cout << "LSM==" << sp.lsm << std::endl;
             return Color(1, 0, 1);
+        }
     }
 
     float Texture::get_level(const SampleParams &sp)
@@ -38,31 +84,38 @@ namespace CGL
         auto &mip = mipmap[level];
         int sample_x = int(uv.x * mip.width + 0.5);
         int sample_y = int(uv.y * mip.height + 0.5);
-        if (sample_x <=mip.width && sample_y <= mip.height)
+        if (level>=0)
         {
             return mip.get_texel(sample_x, sample_y);
+            
+        }
+        else{
+            // std::cout << "LSM==" << level<< std::endl;
+            return Color(1, 0, 1);
         }
         // return magenta for invalid level
-        return Color(1, 0, 1);
     }
 
     Color Texture::sample_bilinear(Vector2D uv, int level)
     {
         // TODO: Task 5: Fill this in.
         auto &mip = mipmap[level];
-        if (mip.width > 0 && mip.height > 0 && uv.x >= 0 && uv.y >= 0)
+        if (level >= 0)
         {
-            int tx00 = (int)floor(uv.x * mip.width), ty00 = (int)floor(uv.y * mip.height);
-            int tx01 = (int)floor(uv.x * mip.width), ty01 = (int)floor(uv.y * mip.height) + 1;
-            int tx10 = (int)floor(uv.x * mip.width) + 1, ty10 = (int)floor(uv.y * mip.height);
-            int tx11 = (int)floor(uv.x * mip.width) + 1, ty11 = (int)floor(uv.y * mip.height) + 1;
-            Color color0 = (tx10 - uv.x * mip.width ) * mip.get_texel(tx00, ty00) + (uv.x * mip.width - tx00) * mip.get_texel(tx10, ty10);
-            Color color1 = (tx11 - uv.x * mip.width ) * mip.get_texel(tx01, ty01) + (uv.x * mip.width - tx01) * mip.get_texel(tx11, ty11);
-            return (ty01 - uv.y * mip.height) * color0 + (uv.y * mip.height - ty00) * color1;
+            int tx00 = int(uv.x * mip.width), ty00 = int(uv.y * mip.height);
+            int tx01 = int(uv.x * mip.width), ty01 = int(uv.y * mip.height) + 1;
+            int tx10 = int(uv.x * mip.width) + 1, ty10 = int(uv.y * mip.height);
+            int tx11 = int(uv.x * mip.width) + 1, ty11 = int(uv.y * mip.height) + 1;
+            Color color0 = 1.0 * (tx10 - uv.x * mip.width) * mip.get_texel(tx00, ty00) + 1.0 * (uv.x * mip.width - tx00) * mip.get_texel(tx10, ty10);
+            Color color1 = 1.0 * (tx11 - uv.x * mip.width) * mip.get_texel(tx01, ty01) + 1.0 * (uv.x * mip.width - tx01) * mip.get_texel(tx11, ty11);
+            return 1.0 * (ty01 - uv.y * mip.height) * color0 + 1.0 * (uv.y * mip.height - ty00) * color1;
         }
-
         // return magenta for invalid level
-        return Color(1, 0, 1);
+        else
+        {
+            // std::cout << "LSM==" << level << std::endl;
+            return Color(1, 0, 1);
+        }
     }
 
     /****************************************************************************/
