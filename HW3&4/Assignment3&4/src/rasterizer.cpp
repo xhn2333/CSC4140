@@ -289,7 +289,13 @@ namespace CGL
                                                     Texture &tex)
     {
         // TODO: Task 5: Fill in the SampleParams struct and pass it to the tex.sample function.
-
+        SampleParams params;
+        Vector2D U1(x1-x0, y1-y0), U2(x2-x0, y2-y0);
+        Vector2D V1(u1-u0, v1-v0), V2(u2-u0, v2-v0);
+        params.p_dx_uv = Vector2D(  (U1.y*(-V2.y) - U2.y * (-V1.y)) / (U1.x * U2.x - U),
+                                    (U1.x*(-V2.x) - U2.x * (-V1.x)));
+        params.p_dy_uv;
+        params.p_uv;
         // TODO: Task 6: Set the correct barycentric differentials in the SampleParams struct.
         // Hint: You can reuse code from rasterize_triangle/rasterize_interpolated_color_triangle
     }
