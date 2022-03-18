@@ -22,7 +22,7 @@ namespace CGL
     float Texture::get_level(const SampleParams &sp)
     {
         // TODO: Task 6: Fill this in.
-
+        
         return 0;
     }
 
