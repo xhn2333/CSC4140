@@ -16,17 +16,18 @@ namespace CGL
         this->width = width;
         this->height = height;
         this->sample_rate = sample_rate;
+        this->sqrt_sample_rate = int(sqrt(sample_rate));
+        this->threshold_sample_rate = 1.0 / int(sqrt(sample_rate));
 
         sample_buffer.resize(width * height * sample_rate, Color::White);
     }
 
     // Used by rasterize_point and rasterize_line
-    void RasterizerImp::fill_pixel(float x, float y, Color c) // size_t
+    inline void RasterizerImp::fill_pixel(float x, float y, Color c) // size_t
     {
         // TODO: Task 2: You might need to this function to fix points and lines (such as the black rectangle border in test4.svg)
         // NOTE: You are not required to implement proper supersampling for points and lines
         // It is sufficient to use the same color for all supersamples of a pixel for points and lines (not triangles)
-        int sqrt_sample_rate = int(sqrt(sample_rate));
         int sx = (int)floor(1.0 * x * sqrt_sample_rate);
         int sy = (int)floor(1.0 * y * sqrt_sample_rate);
         sample_buffer[(sy * width * sqrt_sample_rate + sx)] = c;
@@ -38,7 +39,6 @@ namespace CGL
     void RasterizerImp::rasterize_point(float x, float y, Color color)
     {
         // fill in the nearest pixel
-        float threshold_sample_rate = 1.0 / int(sqrt(sample_rate));
         // check bounds
         for (float sx = x; sx < x + 1; sx += threshold_sample_rate)
         {
@@ -64,7 +64,7 @@ namespace CGL
             swap(x0, x1);
             swap(y0, y1);
         }
-        float threshold_sample_rate = 1.0 / int(sqrt(sample_rate));
+
         float pt[] = {x0, y0};
         float m = (y1 - y0) / (x1 - x0);
         float dpt[] = {1, m};
@@ -125,24 +125,22 @@ namespace CGL
         // numTriangle++;
         // TODO: Task 1: Implement basic triangle rasterization here, no supersampling
 
-        int sqrt_sample_rate = int(sqrt(sample_rate));
-        float threshold_sample_rate = 1.0 / sqrt_sample_rate;
-
         RasterizerPoint midPoint;
-        midPoint.x = float(int((x0 + x1 + x2) / 3)) + 0.5 * threshold_sample_rate;
-        midPoint.y = float(int((y0 + y1 + y2) / 3)) + 0.5 * threshold_sample_rate;
+        midPoint.x = float(floor((x0 + x1 + x2) / 3)) + 0.5 * threshold_sample_rate;
+        midPoint.y = float(floor((y0 + y1 + y2) / 3)) + 0.5 * threshold_sample_rate;
 
-        queue<RasterizerPoint> q;
+        // queue<RasterizerPoint> q;
+        queue<pair<float, float>> q;
         set<pair<int, int>> hashMap;
         float dir[8][2] = {{0.0f, 1.0}, {0.0f, -1.0}, {1.0, 0.0f}, {-1.0, 0.0f}, {1.0, 1.0}, {1.0, -1.0}, {-1.0, 1.0}, {-1.0, -1.0}};
 
-        q.push(midPoint);
+        q.push(make_pair(midPoint.x, midPoint.y));
         while (!q.empty())
         {
-            RasterizerPoint head = q.front();
+            pair<float, float> head = q.front();
             q.pop();
-            int sx = (int)floor(float(head.x * sqrt_sample_rate) + 0.5);
-            int sy = (int)floor(float(head.y * sqrt_sample_rate) + 0.5);
+            int sx = (int)floor(float(head.first * sqrt_sample_rate) + 0.5);
+            int sy = (int)floor(float(head.second * sqrt_sample_rate) + 0.5);
             if (sx < 0 || sx >= width * sqrt_sample_rate)
                 continue;
             if (sy < 0 || sy >= height * sqrt_sample_rate)
@@ -150,17 +148,18 @@ namespace CGL
             if (hashMap.find(make_pair(sx, sy)) == hashMap.end())
             {
 
-                if (inside(x0, y0, x1, y1, x2, y2, head.x, head.y))
+                if (inside(x0, y0, x1, y1, x2, y2, head.first, head.second))
                 {
                     // sample_buffer[sy * width * sqrt_sample_rate + sx] = color;
-                    fill_pixel(head.x, head.y, color);
+                    fill_pixel(head.first, head.second, color);
                     hashMap.insert(make_pair(sx, sy));
-                    for (int i = 0; i < 8; ++i)
+                    for (unsigned int i = 0; i < 8; ++i)
                     {
-                        RasterizerPoint tail;
-                        tail.x = head.x + dir[i][0] * threshold_sample_rate;
-                        tail.y = head.y + dir[i][1] * threshold_sample_rate;
-                        q.push(tail);
+                         // RasterizerPoint tail;
+                        // tail.x = head.first + dir[i][0] * threshold_sample_rate;
+                        // tail.y = head.second + dir[i][1] * threshold_sample_rate;
+                        // q.push(tail);
+                        q.push(make_pair(head.first + dir[i][0] * threshold_sample_rate, head.second + dir[i][1] * threshold_sample_rate));
                     }
                 }
             }
@@ -201,7 +200,7 @@ namespace CGL
             swap(y0, y1);
             swap(c0, c1);
         }
-        float threshold_sample_rate = 1.0 / int(sqrt(sample_rate));
+
         float pt[] = {x0, y0};
         float m = (y1 - y0) / (x1 - x0);
         float dpt[] = {1, m};
@@ -231,9 +230,6 @@ namespace CGL
     {
         // TODO: Task 4: Rasterize the triangle, calculating barycentric coordinates and using them to interpolate vertex colors across the triangle
         float Alpha, Beta, Gamma;
-
-        int sqrt_sample_rate = int(sqrt(sample_rate));
-        float threshold_sample_rate = 1.0 / sqrt_sample_rate;
 
         RasterizerPoint midPoint;
         midPoint.x = float(floor((x0 + x1 + x2) / 3)) + 0.5 * threshold_sample_rate;
@@ -294,11 +290,10 @@ namespace CGL
         float Alpha2, Beta2, Gamma2;
 
         SampleParams params;
+        params.lsm = lsm;
+        params.psm = psm;
         Vector2D U1(x1 - x0, y1 - y0), U2(x2 - x0, y2 - y0);
         Vector2D V1(u1 - u0, v1 - v0), V2(u2 - u0, v2 - v0);
-
-        int sqrt_sample_rate = int(sqrt(sample_rate));
-        float threshold_sample_rate = 1.0 / sqrt_sample_rate;
 
         RasterizerPoint midPoint;
         midPoint.x = float(floor((x0 + x1 + x2) / 3)) + 0.5 * threshold_sample_rate;
@@ -335,7 +330,7 @@ namespace CGL
                     Alpha2 = (-(head.x - x1) * (y2 - y1) + (head.y + threshold_sample_rate - y1) * (x2 - x1)) / (-(x0 - x1) * (y2 - y1) + (y0 - y1) * (x2 - x1));
                     Beta2 = (-(head.x - x2) * (y0 - y2) + (head.y + threshold_sample_rate - y2) * (x0 - x2)) / (-(x1 - x2) * (y0 - y2) + (y1 - y2) * (x0 - x2));
                     Gamma2 = 1 - Alpha - Beta;
-                    
+
                     params.p_uv = Alpha * Vector2D(u0, v0) + Beta * Vector2D(u1, v1) + Gamma * Vector2D(u2, v2);
                     params.p_dx_uv = (Alpha1 * Vector2D(u0, v0) + Beta1 * Vector2D(u1, v1) + Gamma1 * Vector2D(u2, v2) - params.p_uv) / threshold_sample_rate;
                     params.p_dy_uv = (Alpha2 * Vector2D(u0, v0) + Beta2 * Vector2D(u1, v1) + Gamma2 * Vector2D(u2, v2) - params.p_uv) / threshold_sample_rate;
@@ -361,8 +356,8 @@ namespace CGL
     }
 
     void RasterizerImp::rasterize_interpolated_texture_line(float x0, float y0, float u0, float v0,
-                                                          float x1, float y1, float u1, float v1,
-                                                          Texture &tex, SampleParams &sp)
+                                                            float x1, float y1, float u1, float v1,
+                                                            Texture &tex, SampleParams &sp)
     {
         if (x0 > x1)
         {
@@ -371,7 +366,6 @@ namespace CGL
             swap(u0, u1);
             swap(v0, v1);
         }
-        float threshold_sample_rate = 1.0 / int(sqrt(sample_rate));
         float pt[] = {x0, y0};
         float m = (y1 - y0) / (x1 - x0);
         float dpt[] = {1, m};
@@ -401,6 +395,8 @@ namespace CGL
         // TODO: Task 2: You may want to update this function for supersampling support
 
         this->sample_rate = rate;
+        this->sqrt_sample_rate = int(sqrt(sample_rate));
+        this->threshold_sample_rate = 1.0 / int(sqrt(sample_rate));
 
         this->sample_buffer.resize(width * height * sample_rate, Color::White);
     }
@@ -432,7 +428,6 @@ namespace CGL
     void RasterizerImp::resolve_to_framebuffer()
     {
         // TODO: Task 2: You will likely want to update this function for supersampling support
-        int sqrt_sample_rate = int(sqrt(sample_rate));
         for (int x = 0; x < width; ++x)
         {
             for (int y = 0; y < height; ++y)

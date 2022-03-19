@@ -231,6 +231,7 @@ namespace CGL
 
             // toggle pixel sampling scheme
         case 'P':
+            // std::cout << PixelSampleMethod(P_LINEAR) << std::endl;
             psm = (PixelSampleMethod)((psm + 1) % 2);
             software_rasterizer->set_psm(psm);
             redraw();

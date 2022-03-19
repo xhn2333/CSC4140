@@ -10,7 +10,9 @@ namespace CGL
     Color Texture::sample(const SampleParams &sp)
     {
         // TODO: Task 6: Fill this in.
+        //const SampleParams const *sampleParams = &sp;
         float level = get_level(sp);
+        level = 0;
         if (sp.lsm == L_ZERO)
         {
             level = 0;
@@ -20,7 +22,7 @@ namespace CGL
                 return sample_nearest(sp.p_uv, level);
 
             else{
-                // std::cout << "LSM==" << sp.lsm << std::endl;
+
                 return Color(1, 0, 1);
             }
                 
@@ -28,8 +30,9 @@ namespace CGL
         else if (sp.lsm == L_NEAREST)
         {
             level = (int)floor(level);
-            if (sp.psm == P_LINEAR)
+            if (sp.psm == P_LINEAR){
                 return sample_bilinear(sp.p_uv, int(level + 0.5));
+            }
             else if (sp.psm == P_NEAREST)
                 return sample_nearest(sp.p_uv, int(level + 0.5));
             else
@@ -63,6 +66,7 @@ namespace CGL
             //-----------------std::cout << "LSM==" << sp.lsm << std::endl;
             return Color(1, 0, 1);
         }
+        
     }
 
     float Texture::get_level(const SampleParams &sp)

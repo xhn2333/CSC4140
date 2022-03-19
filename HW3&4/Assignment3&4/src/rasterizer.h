@@ -81,7 +81,8 @@ namespace CGL
     private:
         // The total number of samples
         unsigned int sample_rate;
-
+        unsigned int sqrt_sample_rate;
+        float threshold_sample_rate;
         // Constants indicating which sampling methods are used
         PixelSampleMethod psm;
         LevelSampleMethod lsm;
