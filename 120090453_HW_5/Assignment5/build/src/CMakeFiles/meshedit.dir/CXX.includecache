@@ -248,33 +248,9 @@ CGL/CGL.h
 mesh.h
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/mesh.h
 
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/camera.cpp
-camera.h
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/camera.h
-
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/camera.h
 scene.h
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/scene.h
-
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/collada.cpp
-collada.h
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/collada.h
-assert.h
--
-map
--
-string
--
-iomanip
--
-fstream
--
-sstream
--
-iostream
--
-algorithm
--
 
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/collada.h
 string
@@ -296,10 +272,6 @@ mesh.h
 material.h
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/material.h
 
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/halfEdgeMesh.cpp
-halfEdgeMesh.h
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/halfEdgeMesh.h
-
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/halfEdgeMesh.h
 set
 -
@@ -317,10 +289,6 @@ CGL/CGL.h
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/CGL/CGL.h
 mesh.h
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/mesh.h
-
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/light.cpp
-light.h
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/light.h
 
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/light.h
 scene.h
@@ -344,10 +312,6 @@ shaderUtils.h
 iostream
 -
 
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/material.cpp
-material.h
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/material.h
-
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/material.h
 scene.h
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/scene.h
@@ -359,10 +323,6 @@ unordered_map
 -
 unordered_set
 -
-
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/mesh.cpp
-mesh.h
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/mesh.h
 
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/mesh.h
 scene.h
@@ -412,25 +372,11 @@ algorithm
 
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/mutablePriorityQueue.h
 
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/png.cpp
-png.h
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/png.h
-fstream
--
-sstream
--
-iostream
--
-
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/png.h
 map
 -
 vector
 -
-
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/scene.cpp
-scene.h
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/scene.h
 
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/scene.h
 string
@@ -477,16 +423,6 @@ bezierPatch.h
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/bezierPatch.h
 bezierCurve.h
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/bezierCurve.h
-
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/texture.cpp
-texture.h
-/home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/texture.h
-assert.h
--
-iostream
--
-algorithm
--
 
 /home/xhn/Desktop/CSC4140/120090453_HW_5/Assignment5/src/texture.h
 CGL/CGL.h
