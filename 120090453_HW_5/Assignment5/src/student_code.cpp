@@ -26,6 +26,18 @@ namespace CGL
         return newPoints;
     }
 
+    double Utils::BernsteinPolynomial1D(int n, long j, double t)
+    {
+        double result = 1;
+        for (int i = n; i > j; --i)
+        {
+            result *= i;
+        }
+        result *= pow(t, n-j);
+        result *= pow(1-t, j);
+        return result;
+    }
+
     /**
      * Evaluates one step of the de Casteljau's algorithm using the given points and
      * the scalar parameter t (function parameter).
@@ -38,6 +50,12 @@ namespace CGL
     {
         // TODO Task 2.
         std::vector<Vector3D> newPoints;
+        for (auto point = points.begin(); point + 1 != points.end(); point++)
+        {
+            Vector3D interPoint;
+            interPoint = (1 - t) * (*point) + t * (*(point + 1));
+            newPoints.push_back(interPoint);
+        }
         return newPoints;
     }
 
@@ -51,7 +69,16 @@ namespace CGL
     Vector3D BezierPatch::evaluate1D(std::vector<Vector3D> const &points, double t) const
     {
         // TODO Task 2.
-        return Vector3D();
+        std::vector< Vector3D > Points = points;
+        while (Points.size() > 1){
+            std::vector< Vector3D > newPoints =  BezierPatch::evaluateStep(Points, t);
+            Points = newPoints;
+        }
+        return Points[0];
+    }
+
+    double Utils::BernsteinPolynomial(int m, int n, long i, long j, double u, double v){
+        return BernsteinPolynomial1D(m, i, u) * BernsteinPolynomial1D(n, j, v);
     }
 
     /**
@@ -64,7 +91,16 @@ namespace CGL
     Vector3D BezierPatch::evaluate(double u, double v) const
     {
         // TODO Task 2.
-        return Vector3D();
+        Vector3D newPoint = Vector3D();
+        std::vector< Vector3D > tmpPoints;
+        for (auto points = BezierPatch::controlPoints.begin(); points < BezierPatch::controlPoints.end(); points++)
+        {
+            Vector3D tmpPoint = Vector3D();
+            tmpPoint = BezierPatch::evaluate1D(*points, v);
+            tmpPoints.push_back(tmpPoint);
+        }
+        newPoint = BezierPatch::evaluate1D(tmpPoints, u);
+        return newPoint;
     }
 
     Vector3D Vertex::normal(void) const
