@@ -33,8 +33,8 @@ namespace CGL
         {
             result *= i;
         }
-        result *= pow(t, n-j);
-        result *= pow(1-t, j);
+        result *= pow(t, n - j);
+        result *= pow(1 - t, j);
         return result;
     }
 
@@ -69,15 +69,17 @@ namespace CGL
     Vector3D BezierPatch::evaluate1D(std::vector<Vector3D> const &points, double t) const
     {
         // TODO Task 2.
-        std::vector< Vector3D > Points = points;
-        while (Points.size() > 1){
-            std::vector< Vector3D > newPoints =  BezierPatch::evaluateStep(Points, t);
+        std::vector<Vector3D> Points = points;
+        while (Points.size() > 1)
+        {
+            std::vector<Vector3D> newPoints = BezierPatch::evaluateStep(Points, t);
             Points = newPoints;
         }
         return Points[0];
     }
 
-    double Utils::BernsteinPolynomial(int m, int n, long i, long j, double u, double v){
+    double Utils::BernsteinPolynomial(int m, int n, long i, long j, double u, double v)
+    {
         return BernsteinPolynomial1D(m, i, u) * BernsteinPolynomial1D(n, j, v);
     }
 
@@ -92,7 +94,7 @@ namespace CGL
     {
         // TODO Task 2.
         Vector3D newPoint = Vector3D();
-        std::vector< Vector3D > tmpPoints;
+        std::vector<Vector3D> tmpPoints;
         for (auto points = BezierPatch::controlPoints.begin(); points < BezierPatch::controlPoints.end(); points++)
         {
             Vector3D tmpPoint = Vector3D();
@@ -111,9 +113,10 @@ namespace CGL
         // triangles, then normalizing.
         Vector3D normal = Vector3D();
         int vertexDegree = Vertex::degree();
-        HalfedgeCIter halfedgeCIter= halfedge();
-        vector<pair<Vector3D, double> > norm_area_list;
-        for(int i=0; i<vertexDegree; i++){
+        HalfedgeCIter halfedgeCIter = halfedge();
+        vector<pair<Vector3D, double>> norm_area_list;
+        for (int i = 0; i < vertexDegree; i++)
+        {
             Vector3D normVector = Vector3D();
             double area = 0;
             Vector3D x0 = halfedgeCIter->vertex()->position - halfedgeCIter->twin()->vertex()->position;
@@ -125,7 +128,8 @@ namespace CGL
             halfedgeCIter = halfedgeCIter->next()->next()->twin();
         }
         double totalArea = 0;
-        for(auto i=norm_area_list.begin(); i!=norm_area_list.end(); i++){
+        for (auto i = norm_area_list.begin(); i != norm_area_list.end(); i++)
+        {
             normal += (*i).first * (*i).second;
             totalArea += (*i).second;
         }
@@ -136,7 +140,8 @@ namespace CGL
     {
         // TODO Task 4.
         // This method should flip the given edge and return an iterator to the flipped edge.
-        if (! e0->isBoundary()){
+        if (!e0->isBoundary())
+        {
             HalfedgeIter h0 = e0->halfedge();
             HalfedgeIter h1 = h0->next();
             HalfedgeIter h2 = h1->next();
@@ -196,7 +201,8 @@ namespace CGL
         // TODO Task 5.
         // This method should split the given edge and return an iterator to the newly inserted vertex.
         // The halfedge of this vertex should point along the edge that was split, rather than the new edges.
-        if (! e0->isBoundary()) {
+        if (!e0->isBoundary())
+        {
             HalfedgeIter h0 = e0->halfedge();
             HalfedgeIter h1 = h0->next();
             HalfedgeIter h2 = h1->next();
@@ -228,17 +234,64 @@ namespace CGL
             HalfedgeIter h13 = newHalfedge();
             HalfedgeIter h14 = newHalfedge();
             HalfedgeIter h15 = newHalfedge();
-            
+
             VertexIter v = newVertex();
 
             EdgeIter e5 = newEdge();
             EdgeIter e6 = newEdge();
             EdgeIter e7 = newEdge();
-            
+
             FaceIter f3 = newFace();
             FaceIter f4 = newFace();
 
+            h0->setNeighbors(h1, h3, v, e0, f1);
+            h1->setNeighbors(h2, h6, v1, e1, f1);
+            h2->setNeighbors(h0, h11, v2, e5, f1);
+            h3->setNeighbors(h4, h0, v1, e0, f2);
+            h4->setNeighbors(h5, h15, v, e7, f2);
+            h5->setNeighbors(h3, h9, v3, e4, f2);
+
+            h6->setNeighbors(h6->next(), h3, v2, e1, h6->face());
+            h7->setNeighbors(h7->next(), h12, v0, e2, h7->face());
+            h8->setNeighbors(h8->next(), h14, v3, e3, h8->face());
+            h9->setNeighbors(h9->next(), h5, v1, e4, h9->face());
+
+            h10->setNeighbors(h11, h13, v, e6, f3);
+            h11->setNeighbors(h12, h2, v, e5, f3);
+            h12->setNeighbors(h10, h7, v, e2, f3);
+            h13->setNeighbors(h14, h10, v, e6, f4);
+            h14->setNeighbors(h15, h8, v, e3, f4);
+            h15->setNeighbors(h13, h4, v, e7, f4);
+
+            v->position = 0.5 * (v0->position + v1->position);
+            v->isNew = 1;
+
+            v0->halfedge() = h10;
+            v1->halfedge() = h1;
+            v2->halfedge() = h12;
+            v2->halfedge() = h5;
+            v2->halfedge() = h0;
             
+            e0->halfedge() = h0;
+            e1->halfedge() = h1;
+            e2->halfedge() = h12;
+            e3->halfedge() = h14;
+            e4->halfedge() = h5;
+            e5->halfedge() = h2;
+            e6->halfedge() = h10;
+            e7->halfedge() = h4;
+
+            e0->isNew = 0;
+            e6->isNew = 0;
+            e5->isNew = 1;
+            e7->isNew = 1;
+            
+            f1->halfedge() = h0;
+            f2->halfedge() = h3;
+            f3->halfedge() = h10;
+            f4->halfedge() = h13;
+
+            return v;
         }
         return VertexIter();
     }
@@ -263,5 +316,8 @@ namespace CGL
         // 4. Flip any new edge that connects an old and new vertex.
 
         // 5. Copy the new vertex positions into final Vertex::position.
+
+        
+
     }
 }
