@@ -271,7 +271,7 @@ namespace CGL
             v2->halfedge() = h12;
             v2->halfedge() = h5;
             v2->halfedge() = h0;
-            
+
             e0->halfedge() = h0;
             e1->halfedge() = h1;
             e2->halfedge() = h12;
@@ -285,7 +285,7 @@ namespace CGL
             e6->isNew = 0;
             e5->isNew = 1;
             e7->isNew = 1;
-            
+
             f1->halfedge() = h0;
             f2->halfedge() = h3;
             f3->halfedge() = h10;
@@ -317,7 +317,68 @@ namespace CGL
 
         // 5. Copy the new vertex positions into final Vertex::position.
 
-        
+        for (auto e = mesh.edgesBegin(); e != mesh.edgesEnd(); e++)
+        {
+            e->isNew = 0;
 
+            HalfedgeIter h0 = e->halfedge();
+            HalfedgeIter h1 = h0->next();
+            HalfedgeIter h2 = h1->next();
+            HalfedgeIter h3 = h0->twin();
+            HalfedgeIter h4 = h3->next();
+            HalfedgeIter h5 = h4->next();
+
+            VertexIter v0 = h0->vertex();
+            VertexIter v1 = h3->vertex();
+            VertexIter v2 = h2->vertex();
+            VertexIter v3 = h5->vertex();
+
+            e->newPosition = (3.0 / 8.0) * (v0->position + v1->position) + (1.0 / 8.0) * (v2->position + v3->position);
+        }
+
+        for (auto v = mesh.verticesBegin(); v != mesh.verticesEnd(); v++)
+        {
+            v->isNew = 0;
+
+            HalfedgeIter h = v->halfedge();
+            Vector3D original_neighbor_position_sum = Vector3D();
+            for (int i = 0; i < v->degree(); i++)
+            {
+                original_neighbor_position_sum += h->vertex()->position;
+                h = h->next()->next()->twin();
+            }
+            double n = v->degree();
+            double u = (n == 3.0 ? 3.0 / 16.0 : 3.0 / 8.0 / n);
+            v->newPosition = (1 - n * u) * v->position + u * original_neighbor_position_sum;
+        }
+
+        for (auto e = mesh.edgesBegin(); e != mesh.edgesEnd(); e++)
+        {
+            VertexIter v1 = e->halfedge()->vertex();
+            VertexIter v2 = e->halfedge()->twin()->vertex();
+
+            if (!v1->isNew && !v2->isNew)
+            {
+                VertexIter v = mesh.splitEdge(e);
+                v->newPosition = e->newPosition;
+            }
+        }
+
+        for (auto e = mesh.edgesBegin(); e != mesh.edgesEnd(); e++)
+        {
+            VertexIter v1 = e->halfedge()->vertex();
+            VertexIter v2 = e->halfedge()->twin()->vertex();
+
+            if (e->isNew && (v1->isNew + v2->isNew == 1))
+            {
+                mesh.flipEdge(e);
+            }
+        }
+
+        for (auto v = mesh.verticesBegin(); v != mesh.verticesEnd(); v++)
+        {
+            v->position = v->newPosition;
+            v->isNew = 0;
+        }
     }
 }
