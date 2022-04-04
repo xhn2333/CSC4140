@@ -251,17 +251,17 @@ namespace CGL
             h4->setNeighbors(h5, h15, v, e7, f2);
             h5->setNeighbors(h3, h9, v3, e4, f2);
 
-            h6->setNeighbors(h6->next(), h3, v2, e1, h6->face());
+            h6->setNeighbors(h6->next(), h1, v2, e1, h6->face());
             h7->setNeighbors(h7->next(), h12, v0, e2, h7->face());
             h8->setNeighbors(h8->next(), h14, v3, e3, h8->face());
             h9->setNeighbors(h9->next(), h5, v1, e4, h9->face());
 
-            h10->setNeighbors(h11, h13, v, e6, f3);
+            h10->setNeighbors(h11, h13, v0, e6, f3);
             h11->setNeighbors(h12, h2, v, e5, f3);
-            h12->setNeighbors(h10, h7, v, e2, f3);
+            h12->setNeighbors(h10, h7, v2, e2, f3);
             h13->setNeighbors(h14, h10, v, e6, f4);
-            h14->setNeighbors(h15, h8, v, e3, f4);
-            h15->setNeighbors(h13, h4, v, e7, f4);
+            h14->setNeighbors(h15, h8, v0, e3, f4);
+            h15->setNeighbors(h13, h4, v3, e7, f4);
 
             v->position = 0.5 * (v0->position + v1->position);
             v->isNew = 1;
@@ -342,15 +342,16 @@ namespace CGL
 
             HalfedgeIter h = v->halfedge();
             Vector3D original_neighbor_position_sum = Vector3D();
-            
+
             for (int i = 0; i < v->degree(); i++)
             {
-                original_neighbor_position_sum += h->vertex()->position;
+                original_neighbor_position_sum += h->twin()->vertex()->position;
                 h = h->next()->next()->twin();
             }
-            double n = v->degree();
-            double u = (n == 3.0 ? 3.0 / 16.0 : 3.0 / 8.0 / n);
-            v->newPosition = (1 - n * u) * v->position + u * original_neighbor_position_sum;
+            double n = double(v->degree());
+            double u = (n == 3.0 ? (3.0/16.0) : (3.0/8.0/n));
+
+            v->newPosition = (1.0 - n * u) * v->position + u * original_neighbor_position_sum;
         }
 
         for (auto e = mesh.edgesBegin(); e != mesh.edgesEnd(); e++)
