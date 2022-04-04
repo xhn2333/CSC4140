@@ -342,6 +342,7 @@ namespace CGL
 
             HalfedgeIter h = v->halfedge();
             Vector3D original_neighbor_position_sum = Vector3D();
+            
             for (int i = 0; i < v->degree(); i++)
             {
                 original_neighbor_position_sum += h->vertex()->position;
