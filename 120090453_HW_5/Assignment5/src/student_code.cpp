@@ -140,7 +140,7 @@ namespace CGL
             HalfedgeIter h0 = e0->halfedge();
             HalfedgeIter h1 = h0->next();
             HalfedgeIter h2 = h1->next();
-            HalfedgeIter h3 = h2->next();
+            HalfedgeIter h3 = h0->twin();
             HalfedgeIter h4 = h3->next();
             HalfedgeIter h5 = h4->next();
 
@@ -188,7 +188,7 @@ namespace CGL
             f1->halfedge() = h0;
             f2->halfedge() = h3;
         }
-        return EdgeIter();
+        return e0;
     }
 
     VertexIter HalfedgeMesh::splitEdge(EdgeIter e0)
@@ -196,6 +196,50 @@ namespace CGL
         // TODO Task 5.
         // This method should split the given edge and return an iterator to the newly inserted vertex.
         // The halfedge of this vertex should point along the edge that was split, rather than the new edges.
+        if (! e0->isBoundary()) {
+            HalfedgeIter h0 = e0->halfedge();
+            HalfedgeIter h1 = h0->next();
+            HalfedgeIter h2 = h1->next();
+            HalfedgeIter h3 = h0->twin();
+            HalfedgeIter h4 = h3->next();
+            HalfedgeIter h5 = h4->next();
+
+            HalfedgeIter h6 = h1->twin();
+            HalfedgeIter h7 = h2->twin();
+            HalfedgeIter h8 = h4->twin();
+            HalfedgeIter h9 = h5->twin();
+
+            VertexIter v0 = h0->vertex();
+            VertexIter v1 = h3->vertex();
+            VertexIter v2 = h2->vertex();
+            VertexIter v3 = h5->vertex();
+
+            EdgeIter e1 = h1->edge();
+            EdgeIter e2 = h2->edge();
+            EdgeIter e3 = h4->edge();
+            EdgeIter e4 = h5->edge();
+
+            FaceIter f1 = h0->face();
+            FaceIter f2 = h3->face();
+
+            HalfedgeIter h10 = newHalfedge();
+            HalfedgeIter h11 = newHalfedge();
+            HalfedgeIter h12 = newHalfedge();
+            HalfedgeIter h13 = newHalfedge();
+            HalfedgeIter h14 = newHalfedge();
+            HalfedgeIter h15 = newHalfedge();
+            
+            VertexIter v = newVertex();
+
+            EdgeIter e5 = newEdge();
+            EdgeIter e6 = newEdge();
+            EdgeIter e7 = newEdge();
+            
+            FaceIter f3 = newFace();
+            FaceIter f4 = newFace();
+
+            
+        }
         return VertexIter();
     }
 
