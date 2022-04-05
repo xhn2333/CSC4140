@@ -341,13 +341,13 @@ namespace CGL
             v->isNew = 0;
 
             HalfedgeIter h = v->halfedge();
-            Vector3D original_neighbor_position_sum = Vector3D();
+            Vector3D original_neighbor_position_sum = Vector3D(0, 0, 0);
 
-            for (int i = 0; i < v->degree(); i++)
+            do
             {
                 original_neighbor_position_sum += h->twin()->vertex()->position;
-                h = h->next()->next()->twin();
-            }
+                h = h->twin()->next();
+            } while (h != v->halfedge());
             double n = double(v->degree());
             double u = (n == 3.0 ? (3.0/16.0) : (3.0/8.0/n));
 
