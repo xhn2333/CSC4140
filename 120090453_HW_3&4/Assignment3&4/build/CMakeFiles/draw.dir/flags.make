@@ -6,5 +6,5 @@ CXX_FLAGS =  -std=c++11 -m64 -fPIC -O3  -mavx2
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src" -I"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/include" -I"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/deps/glew/include" -I"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/deps/glfw/include" -I"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/include/CGL" 
+CXX_INCLUDES = -I"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src" -I"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/include" -I"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/deps/glew/include" -I"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/deps/glfw/include" -I"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/include/CGL" 
 

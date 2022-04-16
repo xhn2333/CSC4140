@@ -1,4 +1,4 @@
-# Install script for directory: /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/deps/glew
+# Install script for directory: /home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/deps/glew
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,10 +38,10 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glew/libglew.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glew/libglew.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/deps/glew/include/GL")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/deps/glew/include/GL")
 endif()
 

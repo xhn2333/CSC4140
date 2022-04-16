@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4"
+CMAKE_SOURCE_DIR = "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build"
+CMAKE_BINARY_DIR = "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -E cmake_progress_start "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw/CMakeFiles/progress.marks"
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" 0
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -E cmake_progress_start "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw/CMakeFiles/progress.marks"
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/clean
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/preinstall
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/preinstall
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 CGL/deps/glfw/CMakeFiles/uninstall.dir/rule:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/CMakeFiles/uninstall.dir/rule
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(MAKE) -f CMakeFiles/Makefile2 CGL/deps/glfw/CMakeFiles/uninstall.dir/rule
 .PHONY : CGL/deps/glfw/CMakeFiles/uninstall.dir/rule
 
 # Convenience name for target.
@@ -168,7 +168,7 @@ uninstall: CGL/deps/glfw/CMakeFiles/uninstall.dir/rule
 
 # fast build rule for target.
 uninstall/fast:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(MAKE) -f CGL/deps/glfw/CMakeFiles/uninstall.dir/build.make CGL/deps/glfw/CMakeFiles/uninstall.dir/build
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(MAKE) -f CGL/deps/glfw/CMakeFiles/uninstall.dir/build.make CGL/deps/glfw/CMakeFiles/uninstall.dir/build
 .PHONY : uninstall/fast
 
 # Help Target
@@ -195,6 +195,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,8 +1,8 @@
-# Install script for directory: /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL
+# Install script for directory: /home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL")
+  set(CMAKE_INSTALL_PREFIX "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,8 +39,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glew/cmake_install.cmake")
-  include("/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw/cmake_install.cmake")
+  include("/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glew/cmake_install.cmake")
+  include("/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw/cmake_install.cmake")
 
 endif()
 

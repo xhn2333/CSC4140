@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4"
+CMAKE_SOURCE_DIR = "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build"
+CMAKE_BINARY_DIR = "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build"
 
 # Utility rule file for uninstall.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build"
 include CGL/deps/glfw/CMakeFiles/uninstall.dir/progress.make
 
 CGL/deps/glfw/CMakeFiles/uninstall:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw" && /usr/bin/cmake -P /home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw/cmake_uninstall.cmake
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw" && /usr/bin/cmake -P /home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw/cmake_uninstall.cmake
 
 uninstall: CGL/deps/glfw/CMakeFiles/uninstall
 uninstall: CGL/deps/glfw/CMakeFiles/uninstall.dir/build.make
@@ -67,10 +67,10 @@ CGL/deps/glfw/CMakeFiles/uninstall.dir/build: uninstall
 .PHONY : CGL/deps/glfw/CMakeFiles/uninstall.dir/build
 
 CGL/deps/glfw/CMakeFiles/uninstall.dir/clean:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw" && $(CMAKE_COMMAND) -P CMakeFiles/uninstall.dir/cmake_clean.cmake
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw" && $(CMAKE_COMMAND) -P CMakeFiles/uninstall.dir/cmake_clean.cmake
 .PHONY : CGL/deps/glfw/CMakeFiles/uninstall.dir/clean
 
 CGL/deps/glfw/CMakeFiles/uninstall.dir/depend:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/deps/glfw" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw/CMakeFiles/uninstall.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/deps/glfw" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw/CMakeFiles/uninstall.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CGL/deps/glfw/CMakeFiles/uninstall.dir/depend
 

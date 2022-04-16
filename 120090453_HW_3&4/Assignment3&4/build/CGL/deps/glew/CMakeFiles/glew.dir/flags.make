@@ -6,5 +6,5 @@ C_FLAGS =  -fPIC
 
 C_DEFINES = -DGLEW_STATIC
 
-C_INCLUDES = -I"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/deps/glew/include" 
+C_INCLUDES = -I"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/deps/glew/include" 
 

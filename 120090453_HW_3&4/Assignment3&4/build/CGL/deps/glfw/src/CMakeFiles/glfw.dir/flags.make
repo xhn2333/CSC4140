@@ -6,7 +6,7 @@ C_FLAGS =  -fPIC -fPIC   -Wall -std=c99
 
 C_DEFINES = -DGLEW_STATIC -D_GLFW_USE_CONFIG_H
 
-C_INCLUDES = -I"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/deps/glfw/include" -I"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/CGL/deps/glfw/src" -I"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw/src" 
+C_INCLUDES = -I"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/deps/glfw/include" -I"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/CGL/deps/glfw/src" -I"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw/src" 
 
 # Custom flags: CGL/deps/glfw/src/CMakeFiles/glfw.dir/context.c.o_FLAGS = -Wdeclaration-after-statement
 

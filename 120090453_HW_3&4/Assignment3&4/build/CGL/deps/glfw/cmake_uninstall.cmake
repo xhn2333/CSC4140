@@ -1,9 +1,9 @@
 
-if (NOT EXISTS "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw/install_manifest.txt\"")
+if (NOT EXISTS "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw/install_manifest.txt\"")
 endif()
 
-file(READ "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CGL/deps/glfw/install_manifest.txt" files)
+file(READ "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CGL/deps/glfw/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 
 foreach (file ${files})

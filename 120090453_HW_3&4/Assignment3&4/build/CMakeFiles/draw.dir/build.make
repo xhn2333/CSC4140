@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4"
+CMAKE_SOURCE_DIR = "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build"
+CMAKE_BINARY_DIR = "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/draw.dir/depend.make
@@ -59,107 +59,107 @@ include CMakeFiles/draw.dir/flags.make
 
 CMakeFiles/draw.dir/src/texture.cpp.o: CMakeFiles/draw.dir/flags.make
 CMakeFiles/draw.dir/src/texture.cpp.o: ../src/texture.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/draw.dir/src/texture.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/texture.cpp.o -c "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/texture.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/draw.dir/src/texture.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/texture.cpp.o -c "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/texture.cpp"
 
 CMakeFiles/draw.dir/src/texture.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/draw.dir/src/texture.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/texture.cpp" > CMakeFiles/draw.dir/src/texture.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/texture.cpp" > CMakeFiles/draw.dir/src/texture.cpp.i
 
 CMakeFiles/draw.dir/src/texture.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/draw.dir/src/texture.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/texture.cpp" -o CMakeFiles/draw.dir/src/texture.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/texture.cpp" -o CMakeFiles/draw.dir/src/texture.cpp.s
 
 CMakeFiles/draw.dir/src/triangulation.cpp.o: CMakeFiles/draw.dir/flags.make
 CMakeFiles/draw.dir/src/triangulation.cpp.o: ../src/triangulation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/draw.dir/src/triangulation.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/triangulation.cpp.o -c "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/triangulation.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/draw.dir/src/triangulation.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/triangulation.cpp.o -c "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/triangulation.cpp"
 
 CMakeFiles/draw.dir/src/triangulation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/draw.dir/src/triangulation.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/triangulation.cpp" > CMakeFiles/draw.dir/src/triangulation.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/triangulation.cpp" > CMakeFiles/draw.dir/src/triangulation.cpp.i
 
 CMakeFiles/draw.dir/src/triangulation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/draw.dir/src/triangulation.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/triangulation.cpp" -o CMakeFiles/draw.dir/src/triangulation.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/triangulation.cpp" -o CMakeFiles/draw.dir/src/triangulation.cpp.s
 
 CMakeFiles/draw.dir/src/svgparser.cpp.o: CMakeFiles/draw.dir/flags.make
 CMakeFiles/draw.dir/src/svgparser.cpp.o: ../src/svgparser.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/draw.dir/src/svgparser.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/svgparser.cpp.o -c "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svgparser.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/draw.dir/src/svgparser.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/svgparser.cpp.o -c "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/svgparser.cpp"
 
 CMakeFiles/draw.dir/src/svgparser.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/draw.dir/src/svgparser.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svgparser.cpp" > CMakeFiles/draw.dir/src/svgparser.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/svgparser.cpp" > CMakeFiles/draw.dir/src/svgparser.cpp.i
 
 CMakeFiles/draw.dir/src/svgparser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/draw.dir/src/svgparser.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svgparser.cpp" -o CMakeFiles/draw.dir/src/svgparser.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/svgparser.cpp" -o CMakeFiles/draw.dir/src/svgparser.cpp.s
 
 CMakeFiles/draw.dir/src/transforms.cpp.o: CMakeFiles/draw.dir/flags.make
 CMakeFiles/draw.dir/src/transforms.cpp.o: ../src/transforms.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/draw.dir/src/transforms.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/transforms.cpp.o -c "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/transforms.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/draw.dir/src/transforms.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/transforms.cpp.o -c "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/transforms.cpp"
 
 CMakeFiles/draw.dir/src/transforms.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/draw.dir/src/transforms.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/transforms.cpp" > CMakeFiles/draw.dir/src/transforms.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/transforms.cpp" > CMakeFiles/draw.dir/src/transforms.cpp.i
 
 CMakeFiles/draw.dir/src/transforms.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/draw.dir/src/transforms.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/transforms.cpp" -o CMakeFiles/draw.dir/src/transforms.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/transforms.cpp" -o CMakeFiles/draw.dir/src/transforms.cpp.s
 
 CMakeFiles/draw.dir/src/rasterizer.cpp.o: CMakeFiles/draw.dir/flags.make
 CMakeFiles/draw.dir/src/rasterizer.cpp.o: ../src/rasterizer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/draw.dir/src/rasterizer.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/rasterizer.cpp.o -c "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/rasterizer.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/draw.dir/src/rasterizer.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/rasterizer.cpp.o -c "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/rasterizer.cpp"
 
 CMakeFiles/draw.dir/src/rasterizer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/draw.dir/src/rasterizer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/rasterizer.cpp" > CMakeFiles/draw.dir/src/rasterizer.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/rasterizer.cpp" > CMakeFiles/draw.dir/src/rasterizer.cpp.i
 
 CMakeFiles/draw.dir/src/rasterizer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/draw.dir/src/rasterizer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/rasterizer.cpp" -o CMakeFiles/draw.dir/src/rasterizer.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/rasterizer.cpp" -o CMakeFiles/draw.dir/src/rasterizer.cpp.s
 
 CMakeFiles/draw.dir/src/drawrend.cpp.o: CMakeFiles/draw.dir/flags.make
 CMakeFiles/draw.dir/src/drawrend.cpp.o: ../src/drawrend.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/draw.dir/src/drawrend.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/drawrend.cpp.o -c "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/drawrend.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/draw.dir/src/drawrend.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/drawrend.cpp.o -c "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/drawrend.cpp"
 
 CMakeFiles/draw.dir/src/drawrend.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/draw.dir/src/drawrend.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/drawrend.cpp" > CMakeFiles/draw.dir/src/drawrend.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/drawrend.cpp" > CMakeFiles/draw.dir/src/drawrend.cpp.i
 
 CMakeFiles/draw.dir/src/drawrend.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/draw.dir/src/drawrend.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/drawrend.cpp" -o CMakeFiles/draw.dir/src/drawrend.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/drawrend.cpp" -o CMakeFiles/draw.dir/src/drawrend.cpp.s
 
 CMakeFiles/draw.dir/src/svg.cpp.o: CMakeFiles/draw.dir/flags.make
 CMakeFiles/draw.dir/src/svg.cpp.o: ../src/svg.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/draw.dir/src/svg.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/svg.cpp.o -c "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svg.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/draw.dir/src/svg.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/svg.cpp.o -c "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/svg.cpp"
 
 CMakeFiles/draw.dir/src/svg.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/draw.dir/src/svg.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svg.cpp" > CMakeFiles/draw.dir/src/svg.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/svg.cpp" > CMakeFiles/draw.dir/src/svg.cpp.i
 
 CMakeFiles/draw.dir/src/svg.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/draw.dir/src/svg.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/svg.cpp" -o CMakeFiles/draw.dir/src/svg.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/svg.cpp" -o CMakeFiles/draw.dir/src/svg.cpp.s
 
 CMakeFiles/draw.dir/src/main.cpp.o: CMakeFiles/draw.dir/flags.make
 CMakeFiles/draw.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/draw.dir/src/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/main.cpp.o -c "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/draw.dir/src/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/draw.dir/src/main.cpp.o -c "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/main.cpp"
 
 CMakeFiles/draw.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/draw.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/main.cpp" > CMakeFiles/draw.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/main.cpp" > CMakeFiles/draw.dir/src/main.cpp.i
 
 CMakeFiles/draw.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/draw.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/src/main.cpp" -o CMakeFiles/draw.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/src/main.cpp" -o CMakeFiles/draw.dir/src/main.cpp.s
 
 # Object files for target draw
 draw_OBJECTS = \
@@ -195,7 +195,7 @@ draw: /usr/lib/x86_64-linux-gnu/librt.so
 draw: /usr/lib/x86_64-linux-gnu/libm.so
 draw: /usr/lib/x86_64-linux-gnu/libGL.so
 draw: CMakeFiles/draw.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable draw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable draw"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/draw.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -208,6 +208,6 @@ CMakeFiles/draw.dir/clean:
 .PHONY : CMakeFiles/draw.dir/clean
 
 CMakeFiles/draw.dir/depend:
-	cd "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build" "/home/xhn/Desktop/CSC4140/HW3&4/Assignment3&4/build/CMakeFiles/draw.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build" "/home/xhn/Desktop/code/CSC4140/120090453_HW_3&4/Assignment3&4/build/CMakeFiles/draw.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/draw.dir/depend
 
