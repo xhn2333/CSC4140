@@ -31,8 +31,8 @@ bool Triangle::has_intersection(const Ray &r) const {
     Vector3D e2 = p3 - p1;
     Vector3D s = r.o - p1;
 
-    Vector3D s1 = cross(s, e1);
-    Vector3D s2 = cross(s, e2);
+    Vector3D s1 = cross(r.d, e2);
+    Vector3D s2 = cross(s, e1);
     Vector3D test =
         (1 / dot(s1, e1)) * Vector3D(dot(s2, e2), dot(s1, s), dot(s2, r.d));
     double t = test.x;
@@ -41,8 +41,9 @@ bool Triangle::has_intersection(const Ray &r) const {
     gamma = test.z;
     alpha = 1 - beta - gamma;
 
-    bool flag = (t >= r.min_t) && (1 >= alpha) && (alpha >= 0) && (1 >= beta) &&
-                (beta >= 0) && (1 >= gamma) && (gamma >= 0);
+    bool flag = (t < r.max_t) && (t > r.min_t) && (1 >= alpha) &&
+                (alpha >= 0) && (1 >= beta) && (beta >= 0) && (1 >= gamma) &&
+                (gamma >= 0);
 
     return flag;
 }
@@ -55,8 +56,8 @@ bool Triangle::intersect(const Ray &r, Intersection *isect) const {
     Vector3D e2 = p3 - p1;
     Vector3D s = r.o - p1;
 
-    Vector3D s1 = cross(s, e1);
-    Vector3D s2 = cross(s, e2);
+    Vector3D s1 = cross(r.d, e2);
+    Vector3D s2 = cross(s, e1);
     Vector3D test =
         (1 / dot(s1, e1)) * Vector3D(dot(s2, e2), dot(s1, s), dot(s2, r.d));
     double t = test.x;
@@ -65,8 +66,9 @@ bool Triangle::intersect(const Ray &r, Intersection *isect) const {
     gamma = test.z;
     alpha = 1 - beta - gamma;
 
-    bool flag = (t >= r.min_t) && (1 >= alpha) && (alpha >= 0) && (1 >= beta) &&
-                (beta >= 0) && (1 >= gamma) && (gamma >= 0);
+    bool flag = (t <= r.max_t) && (t >= r.min_t) && (1 >= alpha) &&
+                (alpha >= 0) && (1 >= beta) && (beta >= 0) && (1 >= gamma) &&
+                (gamma >= 0);
 
     if (flag) {
         r.max_t = t;
