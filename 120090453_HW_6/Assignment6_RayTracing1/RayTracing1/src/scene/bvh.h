@@ -1,13 +1,13 @@
 #ifndef CGL_BVH_H
 #define CGL_BVH_H
 
-#include "scene.h"
-#include "aggregate.h"
-
 #include <vector>
 
-namespace CGL { namespace SceneObjects {
+#include "aggregate.h"
+#include "scene.h"
 
+namespace CGL {
+namespace SceneObjects {
 
 /**
  * A node in the BVH accelerator aggregate.
@@ -20,22 +20,21 @@ namespace CGL { namespace SceneObjects {
  * constructing the BVH.
  */
 struct BVHNode {
+    BVHNode(BBox bb) : bb(bb), l(NULL), r(NULL) {}
 
-  BVHNode(BBox bb): bb(bb), l(NULL), r(NULL) { }
+    ~BVHNode() {
+        if (l) delete l;
+        if (r) delete r;
+    }
 
-  ~BVHNode() {
-    if (l) delete l;
-    if (r) delete r;
-  }
+    inline bool isLeaf() const { return l == NULL && r == NULL; }
 
-  inline bool isLeaf() const { return l == NULL && r == NULL; }
+    BBox bb;     ///< bounding box of the node
+    BVHNode* l;  ///< left child node
+    BVHNode* r;  ///< right child node
 
-  BBox bb;        ///< bounding box of the node
-  BVHNode* l;     ///< left child node
-  BVHNode* r;     ///< right child node
-
-  std::vector<Primitive*>::const_iterator start;
-  std::vector<Primitive*>::const_iterator end;
+    std::vector<Primitive*>::const_iterator start;
+    std::vector<Primitive*>::const_iterator end;
 };
 
 /**
@@ -46,102 +45,104 @@ struct BVHNode {
  * during ray intersection tests as they are contained in the aggregate.
  */
 class BVHAccel : public Aggregate {
- public:
+   public:
+    BVHAccel() {}
 
-  BVHAccel () { }
+    /**
+     * Parameterized Constructor.
+     * Create BVH from a list of primitives. Note that the BVHAccel Aggregate
+     * stores pointers to the primitives and thus the primitives need be kept
+     * in memory for the aggregate to function properly.
+     * \param primitives primitives to build from
+     * \param max_leaf_size maximum number of primitives to be stored in leaves
+     */
+    BVHAccel(const std::vector<Primitive*>& primitives,
+             size_t max_leaf_size = 4);
 
-  /**
-   * Parameterized Constructor.
-   * Create BVH from a list of primitives. Note that the BVHAccel Aggregate
-   * stores pointers to the primitives and thus the primitives need be kept
-   * in memory for the aggregate to function properly.
-   * \param primitives primitives to build from
-   * \param max_leaf_size maximum number of primitives to be stored in leaves
-   */
-  BVHAccel(const std::vector<Primitive*>& primitives, size_t max_leaf_size = 4);
+    /**
+     * Destructor.
+     * The destructor only destroys the Aggregate itself, the primitives that
+     * it contains are left untouched.
+     */
+    ~BVHAccel();
 
-  /**
-   * Destructor.
-   * The destructor only destroys the Aggregate itself, the primitives that
-   * it contains are left untouched.
-   */
-  ~BVHAccel();
+    /**
+     * Get the world space bounding box of the aggregate.
+     * \return world space bounding box of the aggregate
+     */
+    BBox get_bbox() const;
 
-  /**
-   * Get the world space bounding box of the aggregate.
-   * \return world space bounding box of the aggregate
-   */
-  BBox get_bbox() const;
+    /**
+     * Ray - Aggregate intersection.
+     * Check if the given ray intersects with the aggregate (any primitive in
+     * the aggregate), no intersection information is stored.
+     * \param r ray to test intersection with
+     * \return true if the given ray intersects with the aggregate,
+               false otherwise
+     */
+    bool has_intersection(const Ray& r) const {
+        ++total_rays;
+        return has_intersection(r, root);
+    }
 
-  /**
-   * Ray - Aggregate intersection.
-   * Check if the given ray intersects with the aggregate (any primitive in
-   * the aggregate), no intersection information is stored.
-   * \param r ray to test intersection with
-   * \return true if the given ray intersects with the aggregate,
-             false otherwise
-   */
-  bool has_intersection(const Ray& r) const {
-    ++total_rays;
-    return has_intersection(r, root);
-  }
+    bool has_intersection(const Ray& r, BVHNode* node) const;
 
-  bool has_intersection(const Ray& r, BVHNode *node) const;
+    /**
+     * Ray - Aggregate intersection 2.
+     * Check if the given ray intersects with the aggregate (any primitive in
+     * the aggregate). If so, the input intersection data is updated to contain
+     * intersection information for the point of intersection. Note that the
+     * intersected primitive entry in the intersection should be updated to
+     * the actual primitive in the aggregate that the ray intersected with and
+     * not the aggregate itself.
+     * \param r ray to test intersection with
+     * \param i address to store intersection info
+     * \return true if the given ray intersects with the aggregate,
+               false otherwise
+     */
+    bool intersect(const Ray& r, Intersection* i) const {
+        ++total_rays;
+        return intersect(r, i, root);
+    }
 
-  /**
-   * Ray - Aggregate intersection 2.
-   * Check if the given ray intersects with the aggregate (any primitive in
-   * the aggregate). If so, the input intersection data is updated to contain
-   * intersection information for the point of intersection. Note that the
-   * intersected primitive entry in the intersection should be updated to
-   * the actual primitive in the aggregate that the ray intersected with and
-   * not the aggregate itself.
-   * \param r ray to test intersection with
-   * \param i address to store intersection info
-   * \return true if the given ray intersects with the aggregate,
-             false otherwise
-   */
-  bool intersect(const Ray& r, Intersection* i) const {
-    ++total_rays;
-    return intersect(r, i, root);
-  }
+    bool intersect(const Ray& r, Intersection* i, BVHNode* node) const;
 
-  bool intersect(const Ray& r, Intersection* i, BVHNode *node) const;
+    /**
+     * Get BSDF of the surface material
+     * Note that this does not make sense for the BVHAccel aggregate
+     * because it does not have a surface material. Therefore this
+     * should always return a null pointer.
+     */
+    BSDF* get_bsdf() const { return NULL; }
 
-  /**
-   * Get BSDF of the surface material
-   * Note that this does not make sense for the BVHAccel aggregate
-   * because it does not have a surface material. Therefore this
-   * should always return a null pointer.
-   */
-  BSDF* get_bsdf() const { return NULL; }
+    /**
+     * Get entry point (root) - used in visualizer
+     */
+    BVHNode* get_root() const { return root; }
 
-  /**
-   * Get entry point (root) - used in visualizer
-   */
-  BVHNode* get_root() const { return root; }
+    /**
+     * Draw the BVH with OpenGL - used in visualizer
+     */
+    void draw(const Color& c, float alpha) const {}
+    void draw(BVHNode* node, const Color& c, float alpha) const;
 
-  /**
-   * Draw the BVH with OpenGL - used in visualizer
-   */
-  void draw(const Color& c, float alpha) const { }
-  void draw(BVHNode *node, const Color& c, float alpha) const;
+    /**
+     * Draw the BVH outline with OpenGL - used in visualizer
+     */
+    void drawOutline(const Color& c, float alpha) const {}
+    void drawOutline(BVHNode* node, const Color& c, float alpha) const;
 
-  /**
-   * Draw the BVH outline with OpenGL - used in visualizer
-   */
-  void drawOutline(const Color& c, float alpha) const { }
-  void drawOutline(BVHNode *node, const Color& c, float alpha) const;
+    mutable unsigned long long total_rays, total_isects;
 
-  mutable unsigned long long total_rays, total_isects;
-
-private:
-  std::vector<Primitive*> primitives;
-  BVHNode* root; ///< root node of the BVH
-  BVHNode *construct_bvh(std::vector<Primitive*>::iterator start, std::vector<Primitive*>::iterator end, size_t max_leaf_size);
+   private:
+    std::vector<Primitive*> primitives;
+    BVHNode* root;  ///< root node of the BVH
+    BVHNode* construct_bvh(std::vector<Primitive*>::iterator start,
+                           std::vector<Primitive*>::iterator end,
+                           size_t max_leaf_size);
 };
 
-} // namespace SceneObjects
-} // namespace CGL
+}  // namespace SceneObjects
+}  // namespace CGL
 
-#endif // CGL_BVH_H
+#endif  // CGL_BVH_H

@@ -17,8 +17,9 @@ bool BBox::intersect(const Ray& r, double& t0, double& t1) const {
     Vector3D tmax = inPoint.norm() > outPoint.norm() ? inPoint : outPoint;
     Vector3D tmin = inPoint.norm() < outPoint.norm() ? inPoint : outPoint;
 
-    // t1 = std::min(t1, std::min(tmax.x, std::min(tmax.y, tmax.z)));
-    // t0 = std::max(t0, std::max(tmin.x, std::max(tmin.y, tmin.z)));
+    double t10, t11;
+    t11 = std::min(t1, std::min(tmax.x, std::min(tmax.y, tmax.z)));
+    t10 = std::max(t0, std::max(tmin.x, std::max(tmin.y, tmin.z)));
 
     return true;
 }
