@@ -76,45 +76,37 @@ BVHNode *BVHAccel::construct_bvh(std::vector<Primitive *>::iterator start,
 
         double cost[3] = {0};
         for (int i = 0; i < 3; i++) {
-            std::nth_element(start, start + length / 2, end,
-                             [=](const Primitive *p, const Primitive *q) {
-                                 return p->get_bbox().centroid()[i] <
-                                        q->get_bbox().centroid()[i];
-                             });
-            auto mid = (*(start + length / 2))->get_bbox().centroid()[i];
-            std::partition(start, end, [=](const Primitive *p) {
-                return p->get_bbox().centroid()[i] < mid;
+            auto mid = std::partition(start, end, [=](const Primitive *p) {
+                return p->get_bbox().centroid()[i] < mean[i];
             });
             BBox lbox, rbox;
-            for (auto p = start; p != start + length / 2 + 1; p++) {
+            for (auto p = start; p != mid; p++) {
                 lbox.expand((*p)->get_bbox().centroid());
             }
-            for (auto p = start + length / 2 + 1; p != end; p++) {
+            for (auto p = mid; p != end; p++) {
                 rbox.expand((*p)->get_bbox().centroid());
             }
-            cost[i] = length / 2 * lbox.surface_area() +
-                      (end - start - length / 2) * rbox.surface_area();
+            cost[i] = (mid - start) * lbox.surface_area() +
+                      (end - mid) * rbox.surface_area();
         }
         axis = cost[1] < cost[2] ? (cost[0] < cost[1] ? 0 : 1)
                                  : (cost[0] < cost[2] ? 0 : 2);
 
         // std::cout << std::distance(start, end) << std::endl;
 
-        std::nth_element(start, start + length / 2, end,
-                         [=](const Primitive *p, const Primitive *q) {
-                             return p->get_bbox().centroid()[axis] <
-                                    q->get_bbox().centroid()[axis];
-                         });
-        auto mid = (*(start + length / 2))->get_bbox().centroid()[axis];
-        std::partition(start, end, [=](const Primitive *p) {
-            return p->get_bbox().centroid()[axis] < mid;
+        auto mid = std::partition(start, end, [=](const Primitive *p) {
+            return p->get_bbox().centroid()[axis] < mean[axis];
         });
+
         node->start = start;
         node->end = end;
-        // cout << "Length:" << length << " Mean: " << mean
-        //      << " Bound: " << std::distance(start, bound) << endl;
-        node->l = construct_bvh(start, start + length / 2, max_leaf_size);
-        node->r = construct_bvh(start + length / 2, end, max_leaf_size);
+        if (mid == start || mid == end) {
+            node->l = nullptr;
+            node->r = nullptr;
+        } else {
+            node->l = construct_bvh(start, mid, max_leaf_size);
+            node->r = construct_bvh(mid, end, max_leaf_size);
+        }
     }
     return node;
 }
