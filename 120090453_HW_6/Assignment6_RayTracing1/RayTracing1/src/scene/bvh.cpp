@@ -56,7 +56,7 @@ BVHNode *BVHAccel::construct_bvh(std::vector<Primitive *>::iterator start,
     // primitives.
     BBox bbox;
     Vector3D mean(0, 0, 0);
-    int axis = 2;
+    int axis = 0;
     int length = end - start;
 
     for (auto p = start; p != end; p++) {
@@ -67,18 +67,54 @@ BVHNode *BVHAccel::construct_bvh(std::vector<Primitive *>::iterator start,
 
     BVHNode *node = new BVHNode(bbox);
 
-    if (length <= max_leaf_size || true) {
+    if (length <= max_leaf_size) {
         node->start = start;
         node->end = end;
     } else {
+        auto axis = random() % 3;
         mean /= (double)length;
-        auto bound = std::partition(start, end, [mean, axis](Primitive *p) {
-            return p->get_bbox().centroid()[axis] <= mean[axis];
+
+        double cost[3] = {0};
+        for (int i = 0; i < 3; i++) {
+            std::nth_element(start, start + length / 2, end,
+                             [=](const Primitive *p, const Primitive *q) {
+                                 return p->get_bbox().centroid()[i] <
+                                        q->get_bbox().centroid()[i];
+                             });
+            auto mid = (*(start + length / 2))->get_bbox().centroid()[i];
+            std::partition(start, end, [=](const Primitive *p) {
+                return p->get_bbox().centroid()[i] < mid;
+            });
+            BBox lbox, rbox;
+            for (auto p = start; p != start + length / 2 + 1; p++) {
+                lbox.expand((*p)->get_bbox().centroid());
+            }
+            for (auto p = start + length / 2 + 1; p != end; p++) {
+                rbox.expand((*p)->get_bbox().centroid());
+            }
+            cost[i] = length / 2 * lbox.surface_area() +
+                      (end - start - length / 2) * rbox.surface_area();
+        }
+        axis = cost[1] < cost[2] ? (cost[0] < cost[1] ? 0 : 1)
+                                 : (cost[0] < cost[2] ? 0 : 2);
+
+        // std::cout << std::distance(start, end) << std::endl;
+
+        std::nth_element(start, start + length / 2, end,
+                         [=](const Primitive *p, const Primitive *q) {
+                             return p->get_bbox().centroid()[axis] <
+                                    q->get_bbox().centroid()[axis];
+                         });
+        auto mid = (*(start + length / 2))->get_bbox().centroid()[axis];
+        std::partition(start, end, [=](const Primitive *p) {
+            return p->get_bbox().centroid()[axis] < mid;
         });
         node->start = start;
         node->end = end;
-        node->l = construct_bvh(start, bound, max_leaf_size);
-        node->r = construct_bvh(bound, end, max_leaf_size);
+        // cout << "Length:" << length << " Mean: " << mean
+        //      << " Bound: " << std::distance(start, bound) << endl;
+        node->l = construct_bvh(start, start + length / 2, max_leaf_size);
+        node->r = construct_bvh(start + length / 2, end, max_leaf_size);
     }
     return node;
 }

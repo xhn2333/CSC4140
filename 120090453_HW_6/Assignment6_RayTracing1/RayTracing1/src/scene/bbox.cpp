@@ -14,14 +14,19 @@ bool BBox::intersect(const Ray& r, double& t0, double& t1) const {
     // t0, t1, update t0 and t1 with the new intersection times.
     Vector3D inPoint = (min - r.o) * r.inv_d;
     Vector3D outPoint = (max - r.o) * r.inv_d;
-    Vector3D tmax = inPoint.norm() > outPoint.norm() ? inPoint : outPoint;
-    Vector3D tmin = inPoint.norm() < outPoint.norm() ? inPoint : outPoint;
+    Vector3D tmax = (-INF_D, -INF_D, -INF_D);
+    Vector3D tmin = (INF_D, INF_D, INF_D);
+    for (int i = 0; i < 3; i++) {
+        if (inPoint[i] > outPoint[i]) {
+            std::swap(inPoint[i], outPoint[i]);
+        }
+    }
 
-    double t10, t11;
-    t11 = std::min(t1, std::min(tmax.x, std::min(tmax.y, tmax.z)));
-    t10 = std::max(t0, std::max(tmin.x, std::max(tmin.y, tmin.z)));
-
-    return true;
+    auto t11 =
+        std::min(t1, std::min(outPoint.x, std::min(outPoint.y, outPoint.z)));
+    auto t01 =
+        std::max(t0, std::max(inPoint.x, std::max(inPoint.y, inPoint.z)));
+    return t01 < t11;
 }
 
 void BBox::draw(Color c, float alpha) const {
